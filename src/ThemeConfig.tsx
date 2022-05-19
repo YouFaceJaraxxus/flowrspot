@@ -35,7 +35,7 @@ const ThemeConfig = ({ children }: any) => {
       }
     },
     typography: {
-      fontFamily: ['Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'].join(
+      fontFamily: ['Montserrat', 'Ubuntu', '"Helvetica Neue"', 'Arial', 'sans-serif'].join(
         ',',
       ),
     },
