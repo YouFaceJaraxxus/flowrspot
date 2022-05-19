@@ -72,15 +72,13 @@ const commonSlice = createSlice({
     },
     closeLoginModal: (state) => {
       state.loginModalOpen = false;
-      state.signupModalOpen = true;
     },
     openSignupModal: (state) => {
       state.signupModalOpen = true;
       state.loginModalOpen = false;
     },
     closeSignupModal: (state) => {
-      state.signupModalOpen = true;
-      state.loginModalOpen = false;
+      state.signupModalOpen = false;
     }
   },
 })

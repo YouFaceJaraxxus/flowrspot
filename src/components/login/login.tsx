@@ -16,7 +16,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { loginModalOpen } = useAppSelector(selectCommon);
 
-  const { handleSubmit, control, reset } = useForm<ILoginForm>();
+  const { handleSubmit, control, reset, clearErrors } = useForm<ILoginForm>();
 
   const onSubmit = () => {
     dispatch(setIsLogged(true));
@@ -28,6 +28,7 @@ const Login = () => {
 
   const handleCloseLoginModal = () => {
     dispatch(closeLoginModal());
+    clearErrors();
   }
 
   return (
@@ -53,7 +54,7 @@ const Login = () => {
                 placeholderText={'Email address'}
                 value={value}
                 onValueChange={onChange}
-                error={!!error}
+                error={error? true : false}
                 errorMessage={error ? error.message : null}
                 type="text"
                 width="90%"
@@ -80,7 +81,7 @@ const Login = () => {
                 placeholderText={'Password'}
                 value={value}
                 onValueChange={onChange}
-                error={!!error}
+                error={error? true : false}
                 errorMessage={error ? error.message : null}
                 type="password"
                 width="90%"

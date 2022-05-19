@@ -17,7 +17,7 @@ const Signup = () => {
   const dispatch = useAppDispatch();
   const { signupModalOpen } = useAppSelector(selectCommon);
 
-  const { handleSubmit, control, reset } = useForm<ISignupForm>();
+  const { handleSubmit, control, reset, clearErrors } = useForm<ISignupForm>();
 
   const onSubmit = () => {
     dispatch(setIsLogged(true));
@@ -29,6 +29,7 @@ const Signup = () => {
 
   const handleCloseSignupModal = () => {
     dispatch(closeSignupModal());
+    clearErrors();
   }
 
   return (
@@ -56,7 +57,7 @@ const Signup = () => {
                   placeholderText={'First Name'}
                   value={value}
                   onValueChange={onChange}
-                  error={!!error}
+                  error={error? true : false}
                   errorMessage={error ? error.message : null}
                   type="text"
                   wrapperWidth="40%"
@@ -79,7 +80,7 @@ const Signup = () => {
                   placeholderText={'Last Name'}
                   value={value}
                   onValueChange={onChange}
-                  error={!!error}
+                  error={error? true : false}
                   errorMessage={error ? error.message : null}
                   type="text"
                   wrapperWidth="40%"
@@ -90,6 +91,29 @@ const Signup = () => {
               }}
             />
           </DoubleInputWrapper>
+
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            defaultValue={new Date()}
+            render={({
+              field: { onChange, value },
+              fieldState: { error },
+            }) => (
+              <CustomInputField
+                placeholderText={'Date of Birth'}
+                value={new Date().toDateString()}
+                onValueChange={onChange}
+                error={error? true : false}
+                errorMessage={error ? error.message : null}
+                type="text"
+                width="90%"
+              />
+            )}
+            rules={{
+              required: 'Date of Birth required',
+            }}
+          />
 
           <Controller
             name="email"
@@ -103,7 +127,7 @@ const Signup = () => {
                 placeholderText={'Email address'}
                 value={value}
                 onValueChange={onChange}
-                error={!!error}
+                error={error? true : false}
                 errorMessage={error ? error.message : null}
                 type="text"
                 width="90%"
@@ -130,7 +154,7 @@ const Signup = () => {
                 placeholderText={'Password'}
                 value={value}
                 onValueChange={onChange}
-                error={!!error}
+                error={error? true : false}
                 errorMessage={error ? error.message : null}
                 type="password"
                 width="90%"

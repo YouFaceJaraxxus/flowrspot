@@ -8,7 +8,7 @@ export interface IDoubleInputWrapper {
 export const DoubleInputWrapper = styled('div')<IDoubleInputWrapper>(({ width }) => ({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   margin: 'auto',
   width: width ?? '100%',
 }));
