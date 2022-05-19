@@ -34,6 +34,7 @@ const ThemeConfig = ({ children }: any) => {
         "100": '#b9b6b6',
         "200": 'rgba(0, 0, 0, 0.5)',
         "300": 'rgba(148, 158, 160, 1)',
+        "400": '#F5F6F7',
       }
     },
     typography: {

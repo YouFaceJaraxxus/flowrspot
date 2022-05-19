@@ -17,6 +17,7 @@ interface ICommon {
   theme: 'light' | 'dark';
   snackbarConfig: ISnackbarConfig;
   progressCircleConfig: IProgressCircleConfig;
+  loginModalOpen: boolean;
 }
 
 
@@ -32,7 +33,8 @@ const initialState: ICommon = {
     showProgress: false,
     progressText: '',
     progressSize: 0,
-  }
+  },
+  loginModalOpen: false,
 };
 
 const commonSlice = createSlice({
@@ -62,6 +64,12 @@ const commonSlice = createSlice({
         progressSize: 0,
       }
     },
+    openLoginModal: (state) => {
+      state.loginModalOpen = true;
+    },
+    closeLoginModal: (state) => {
+      state.loginModalOpen = false;
+    },
   },
 })
 
@@ -71,6 +79,8 @@ export const {
   closeSnackbar,
   openProgress,
   closeProgress,
+  openLoginModal,
+  closeLoginModal,
 } = commonSlice.actions;
 
 export default commonSlice.reducer; 
