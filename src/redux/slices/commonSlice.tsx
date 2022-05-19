@@ -19,6 +19,7 @@ interface ICommon {
   progressCircleConfig: IProgressCircleConfig;
   loginModalOpen: boolean;
   signupModalOpen: boolean;
+  profileModalOpen: boolean;
 }
 
 
@@ -37,6 +38,7 @@ const initialState: ICommon = {
   },
   loginModalOpen: false,
   signupModalOpen: false,
+  profileModalOpen: false,
 };
 
 const commonSlice = createSlice({
@@ -79,6 +81,14 @@ const commonSlice = createSlice({
     },
     closeSignupModal: (state) => {
       state.signupModalOpen = false;
+    },
+    openProfileModal: (state) => {
+      state.profileModalOpen = true;
+      state.signupModalOpen = false;
+      state.loginModalOpen = false;
+    },
+    closeProfileModal: (state) => {
+      state.profileModalOpen = false;
     }
   },
 })
@@ -93,6 +103,8 @@ export const {
   closeLoginModal,
   openSignupModal,
   closeSignupModal,
+  openProfileModal,
+  closeProfileModal
 } = commonSlice.actions;
 
 export default commonSlice.reducer; 

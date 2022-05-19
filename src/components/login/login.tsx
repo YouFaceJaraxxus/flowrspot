@@ -8,7 +8,7 @@ import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/cust
 import { HOME_PATH } from '../../router/route/routeConfig';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
-import { closeLoginModal } from '../../redux/slices/commonSlice';
+import { closeLoginModal, openProfileModal } from '../../redux/slices/commonSlice';
 import CustomInputField from '../common/customInputField/customInputField';
 import { useState } from 'react';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
@@ -38,6 +38,7 @@ const Login = () => {
 
   const handleConfirmationProfile = () => {
     handleConfirmModalAnswer();
+    dispatch(openProfileModal());
   }
 
   const onSubmit = () => {

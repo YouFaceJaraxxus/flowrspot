@@ -4,6 +4,7 @@ import ProgressCircle from '../common/progressCircle/progressCircle';
 import Snackbar from '../common/snackbar/snackbar';
 import Header from '../header/header';
 import Login from '../login/login';
+import Profile from '../profile/profile';
 import Signup from '../signup/signup';
 import { LayoutWrapper } from './layoutStyle';
 
@@ -19,6 +20,7 @@ const Layout = ({ children }: any) => {
       {showProgress && <ProgressCircle />}
       <Login />
       <Signup />
+      <Profile />
     </LayoutWrapper>
   )
 };

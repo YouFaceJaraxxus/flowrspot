@@ -33,6 +33,7 @@ const ThemeConfig = ({ children }: any) => {
         "200": 'rgba(0, 0, 0, 0.5)',
         "300": 'rgba(148, 158, 160, 1)',
         "400": '#F5F6F7',
+        "500": 'rgba(51, 65, 68, 1)',
       }
     },
     typography: {
