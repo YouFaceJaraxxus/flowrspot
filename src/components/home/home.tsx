@@ -24,7 +24,7 @@ const Home = () => {
 
   return (
     <HomeWrapper>
-      <FlowersSearch searchInput={searchInput} setSearchInput={setSearchInput} />
+      <FlowersSearch setSearchInput={setSearchInput} />
       <Flowers flowers={filterFlowers(flowers)} />
     </HomeWrapper>
   )
