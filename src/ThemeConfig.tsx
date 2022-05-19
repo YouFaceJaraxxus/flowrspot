@@ -1,15 +1,13 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useAppSelector } from './redux/store/hooks';
-import { selectCommon } from './redux/store/store';
 
 const ThemeConfig = ({ children }: any) => {
-  const { theme: currentTheme } = useAppSelector(selectCommon);
   const theme = createTheme({
     palette: {
       primary: {
-        main: currentTheme=== 'light' ? '#948CFC' : '#514e85',
+        main: '#fff',
         contrastText: '#fff',
-        dark: '#221F40',
+        dark: 'rgba(236, 188, 179, 1)',
+        light: 'rgba(236, 188, 179, 1)'
       },
       secondary: {
         main: '#e9e7ff',

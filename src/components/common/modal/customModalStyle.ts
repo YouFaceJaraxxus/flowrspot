@@ -14,7 +14,7 @@ export const ModalBox = styled(Box)(({ theme }) => ({
     minWidth: '0px',
     width: '80%',
   },
-  borderRadius: '10px',
+  borderRadius: '3px',
   padding: '20px',
   boxShadow: `2px 2px ${theme.palette.grey['100']}`,
 }));

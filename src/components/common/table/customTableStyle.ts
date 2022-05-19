@@ -22,7 +22,7 @@ export const TableItemButton = styled('div')<ITableItem>(({theme, color, bgcolor
   backgroundColor: bgcolor?? theme.palette.common.white,
   margin: '0',
   padding: '5px 10px',
-  borderRadius: '5px',
+  borderRadius: '3px',
   cursor: 'pointer',
   '&:hover':{
     opacity: '0.8',

@@ -5,4 +5,5 @@ export default interface ICustomInputFieldProps{
   placeholderText: string;
   error?: boolean;
   errorMessage?: string;
+  width?: string;
 }

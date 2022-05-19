@@ -54,7 +54,7 @@ export const FlowerImage = styled('img')(() => ({
   alignItems: 'center',
   width: '100%',
   height: '100%',
-  borderRadius: '5px',
+  borderRadius: '3px',
 }));
 
 export const FlowerDetails = styled('div')(() => ({

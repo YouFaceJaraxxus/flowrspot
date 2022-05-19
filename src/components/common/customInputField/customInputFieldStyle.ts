@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 
 export interface IInputPlaceholderWrapper{
   error: boolean;
+  width?: string;
 }
 
 export const CustomInputFieldWrapper = styled('div')(({theme}) => ({
@@ -14,15 +15,16 @@ export const CustomInputFieldWrapper = styled('div')(({theme}) => ({
 }));
 
 
-export const InputPlaceholderWrapper = styled('div')<IInputPlaceholderWrapper>(({theme, error}) => ({
+export const InputPlaceholderWrapper = styled('div')<IInputPlaceholderWrapper>(({theme, error, width}) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
   backgroundColor: theme.palette.grey['400'],
   padding: '10px',
-  borderRadius: '5px',
+  borderRadius: '3px',
   border: error? `1px solid ${theme.palette.error.main}` : 'none',
+  width: width?? '100%',
 }));
 
 export const CustomInputFieldPlaceholder = styled('div')(({theme}) => ({
@@ -44,6 +46,7 @@ export const CustomInputFieldInput = styled('input')(({theme}) => ({
     outline: 'none',
   },
   marginTop: '2px',
+  width: '100%',
 }));
 
 export const CustomInputFieldError = styled('div')(({theme}) => ({

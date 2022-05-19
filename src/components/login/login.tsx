@@ -4,8 +4,7 @@ import { setIsLogged } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { EMAIL_REGEX, IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import ILoginForm from './loginForm';
-import { CustomForm, SubmitButton } from '../common/customForm/customFormStyle';
-import { LoginWrapper } from './loginStyle';
+import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
 import { HOME_PATH } from '../../router/route/routeConfig';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
@@ -23,6 +22,7 @@ const Login = () => {
     dispatch(setIsLogged(true));
     localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
     history.push(HOME_PATH);
+    handleCloseLoginModal();
   }
 
   const handleCloseLoginModal = () => {
@@ -31,7 +31,10 @@ const Login = () => {
 
   return (
     <CustomModal isOpen={loginModalOpen} handleClose={handleCloseLoginModal}>
-      <LoginWrapper>
+      <FormWrapper>
+        <FormTitle>
+          Welcome Back
+        </FormTitle>
         <CustomForm
           noValidate
           autoComplete="off"
@@ -52,6 +55,7 @@ const Login = () => {
                 error={!!error}
                 errorMessage={error ? error.message : null}
                 type="text"
+                width="90%"
               />
             )}
             rules={{
@@ -78,6 +82,7 @@ const Login = () => {
                 error={!!error}
                 errorMessage={error ? error.message : null}
                 type="password"
+                width="90%"
               />
             )}
             rules={{
@@ -91,11 +96,13 @@ const Login = () => {
 
           <SubmitButton
             type="submit"
+            width='95%'
+            margin='20px auto 10px auto'
           >
-            Login
+            Login to your account
           </SubmitButton>
         </CustomForm>
-      </LoginWrapper>
+      </FormWrapper>
     </CustomModal>
 
   )

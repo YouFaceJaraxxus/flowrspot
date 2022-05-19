@@ -8,6 +8,7 @@ const CustomInputField = ({
   placeholderText,
   error,
   errorMessage,
+  width,
 }: ICustomInputFieldProps) => {
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +17,7 @@ const CustomInputField = ({
 
   return (
     <CustomInputFieldWrapper>
-      <InputPlaceholderWrapper error={error}>
+      <InputPlaceholderWrapper error={error} width={width}>
         <CustomInputFieldPlaceholder>{placeholderText}</CustomInputFieldPlaceholder>
         <CustomInputFieldInput type={type} value={value} onChange={handleValueChange} />
       </InputPlaceholderWrapper>

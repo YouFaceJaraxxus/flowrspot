@@ -13,7 +13,7 @@ export const SnackbarWrapper = styled('div')<SnackbarConfig>(({theme, type}) => 
   justifyContent: 'flex-start',
   alignItems: 'center',
   padding: '5px',
-  borderRadius: '5px',
+  borderRadius: '3px',
   backgroundColor: theme.palette[type].main,
   color: 'white',
   [theme.breakpoints.down('sm')]: {

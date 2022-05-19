@@ -52,7 +52,7 @@ export const FlowersSearchInput = styled(TextField)(({ theme }) => ({
   fontFamily: theme.typography.body2.fontFamily,
   marginTop: '30px',
   backgroundColor: theme.palette.common.white,
-  borderRadius: '5px',
+  borderRadius: '3px',
   '&> div > input': {
     color: theme.palette.grey["300"],
     fontWeight: 'bolder',

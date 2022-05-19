@@ -1,21 +1,48 @@
 import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+export interface ICustomButton{
+  width?: string;
+  margin?: string;
+}
+
 export const CustomForm = styled('form')(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
+  width: '100%',
+  margin: 'auto',
 }));
 
-export const SubmitButton = styled('button')(({ theme }) => ({
+export const FormWrapper = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
-  fontSize: '1.2em',
+}));
+
+export const FormTitle = styled('div')(({theme}) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '10px',
-  borderRadius: '5px',
+  width: '100%',
+  fontFamily: theme.typography.body2.fontFamily,
+  fontSize: '1.2em',
+  fontWeight: 'bolder',
+  margin: '10px auto',
+}));
+
+export const SubmitButton = styled('button')<ICustomButton>(({ theme, width, margin }) => ({
+  width: width?? '100%',
+  fontSize: '1em',
+  fontFamily: theme.typography.body2.fontFamily,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '15px 10px',
+  borderRadius: '3px',
   textAlign: 'center',
   wordBreak: 'break-word',
   '&:hover': {
@@ -28,7 +55,7 @@ export const SubmitButton = styled('button')(({ theme }) => ({
     outline: 'none',
     border: 'none',
   },
-  marginTop: '5px',
+  margin: margin?? 'auto',
   backgroundColor: theme.palette.primary.dark,
   color: theme.palette.common.white,
 }));
