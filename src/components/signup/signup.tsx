@@ -3,44 +3,94 @@ import { useHistory } from 'react-router-dom';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { EMAIL_REGEX, IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
-import ILoginForm from './loginForm';
+import ISignupForm from './signupForm';
 import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
 import { HOME_PATH } from '../../router/route/routeConfig';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
-import { closeLoginModal } from '../../redux/slices/commonSlice';
+import { closeSignupModal } from '../../redux/slices/commonSlice';
 import CustomInputField from '../common/customInputField/customInputField';
+import { DoubleInputWrapper } from './signupStyle';
 
-const Login = () => {
+const Signup = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const { loginModalOpen } = useAppSelector(selectCommon);
+  const { signupModalOpen } = useAppSelector(selectCommon);
 
-  const { handleSubmit, control, reset } = useForm<ILoginForm>();
+  const { handleSubmit, control, reset } = useForm<ISignupForm>();
 
   const onSubmit = () => {
     dispatch(setIsLogged(true));
     localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
     history.push(HOME_PATH);
-    handleCloseLoginModal();
+    handleCloseSignupModal();
     reset();
   }
 
-  const handleCloseLoginModal = () => {
-    dispatch(closeLoginModal());
+  const handleCloseSignupModal = () => {
+    dispatch(closeSignupModal());
   }
 
   return (
-    <CustomModal isOpen={loginModalOpen} handleClose={handleCloseLoginModal}>
+    <CustomModal isOpen={signupModalOpen} handleClose={handleCloseSignupModal}>
       <FormWrapper>
         <FormTitle>
-          Welcome Back
+          Create an account
         </FormTitle>
         <CustomForm
           noValidate
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
+
+          <DoubleInputWrapper width="100%">
+            <Controller
+              name="name"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <CustomInputField
+                  placeholderText={'First Name'}
+                  value={value}
+                  onValueChange={onChange}
+                  error={!!error}
+                  errorMessage={error ? error.message : null}
+                  type="text"
+                  wrapperWidth="40%"
+                />
+              )}
+              rules={{
+                required: 'Name required',
+              }}
+            />
+
+            <Controller
+              name="lastName"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <CustomInputField
+                  placeholderText={'Last Name'}
+                  value={value}
+                  onValueChange={onChange}
+                  error={!!error}
+                  errorMessage={error ? error.message : null}
+                  type="text"
+                  wrapperWidth="40%"
+                />
+              )}
+              rules={{
+                required: 'Last Name required',
+              }}
+            />
+          </DoubleInputWrapper>
+
           <Controller
             name="email"
             control={control}
@@ -100,7 +150,7 @@ const Login = () => {
             width='95%'
             margin='20px auto 10px auto'
           >
-            Login to your account
+            Create account
           </SubmitButton>
         </CustomForm>
       </FormWrapper>
@@ -109,4 +159,4 @@ const Login = () => {
   )
 };
 
-export default Login;
+export default Signup;

@@ -18,7 +18,7 @@ import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import { AccountCircle } from '@mui/icons-material';
-import { openLoginModal, setTheme } from '../../redux/slices/commonSlice';
+import { openLoginModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
 
 const pages = [] as IHeaderTab[];
 
@@ -51,6 +51,14 @@ const Header = () => {
         title: 'Login',
         action: () => {
           dispatch(openLoginModal());
+        },
+        protected: false,
+      },
+      {
+        id: 2,
+        title: 'Signup',
+        action: () => {
+          dispatch(openSignupModal());
         },
         protected: false,
       }

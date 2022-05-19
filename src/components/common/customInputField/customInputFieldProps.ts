@@ -6,4 +6,5 @@ export default interface ICustomInputFieldProps{
   error?: boolean;
   errorMessage?: string;
   width?: string;
+  wrapperWidth?: string;
 }

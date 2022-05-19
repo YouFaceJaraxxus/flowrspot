@@ -5,13 +5,17 @@ export interface IInputPlaceholderWrapper{
   width?: string;
 }
 
-export const CustomInputFieldWrapper = styled('div')(({theme}) => ({
+export interface ICustomInputFieldWrapper{
+  width?: string;
+}
+
+export const CustomInputFieldWrapper = styled('div')<ICustomInputFieldWrapper>(({width}) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
   margin: '10px auto',
-  width: '100%',
+  width: width?? '100%',
 }));
 
 
