@@ -7,6 +7,7 @@ export const FlowersWrapper = styled('div')(() => ({
   alignItems: 'center',
   width: '100%',
   maxWidth: '1044px',
+  marginTop: '30px',
 }));
 
 export const FlowersGrid = styled('div')(() => ({

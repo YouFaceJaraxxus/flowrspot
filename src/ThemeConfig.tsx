@@ -33,10 +33,11 @@ const ThemeConfig = ({ children }: any) => {
       grey: {
         "100": '#b9b6b6',
         "200": 'rgba(0, 0, 0, 0.5)',
+        "300": 'rgba(148, 158, 160, 1)',
       }
     },
     typography: {
-      fontFamily: ['Montserrat', 'Ubuntu', '"Helvetica Neue"', 'Arial', 'sans-serif'].join(
+      fontFamily: ['Montserrat', 'Ubuntu', 'Playfair Display','"Helvetica Neue"', 'Arial', 'sans-serif'].join(
         ',',
       ),
       body1: {
@@ -45,6 +46,9 @@ const ThemeConfig = ({ children }: any) => {
       body2: {
         fontFamily: 'Ubuntu',
       },
+      subtitle1:{
+        fontFamily: 'Playfair Display',
+      }
     },
     breakpoints: {
       values: {

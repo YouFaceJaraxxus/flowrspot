@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-import { getFlowersAsync } from '../../../redux/slices/flowersSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/store/hooks';
-import { selectFlowers } from '../../../redux/store/store';
+import IFlowersProps from './flowersProps';
 import {
   FlowersWrapper,
   FlowerDetails,
@@ -14,13 +11,9 @@ import {
   FlowerSightings
 } from './flowersStyle';
 
-const Flowers = () => {
-  const dispatch = useAppDispatch();
-  const { flowers } = useAppSelector(selectFlowers);
-
-  useEffect(() => {
-    dispatch(getFlowersAsync());
-  }, []);
+const Flowers = ({
+  flowers
+}: IFlowersProps) => {
 
   return (
     <FlowersWrapper>
