@@ -1,7 +1,9 @@
-import ICustomModalProps from '../customModalProps';
-
-export default interface IConfirmModalProps extends ICustomModalProps{
+export default interface IConfirmModalProps {
+  isOpen: boolean;
+  handleClose: () => void;
   title: string;
-  handleAccept: Function;
-  severity: 'success' | 'error';
+  mainButtonText: string;
+  mainButtonAction: () => void;
+  secondaryButtonText?: string;
+  secondaryButtonAction?: () => void;
 };

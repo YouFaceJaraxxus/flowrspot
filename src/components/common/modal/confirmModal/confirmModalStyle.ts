@@ -1,10 +1,6 @@
 import { styled } from '@mui/material/styles';
 
 
-export interface IConfirmModalProps {
-  severity: 'success' | 'error';
-}
-
 export const ConfirmModalWrapper = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -18,9 +14,10 @@ export const ConfirmModalTitle = styled('div')(({theme}) => ({
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',
-  wordBreak: 'break-all',
+  wordBreak: 'break-word',
   fontSize: '1.4em',
   color: theme.palette.common.black,
+  fontWeight: 'bolder',
   marginBottom: '20px'
 }));
 
@@ -31,28 +28,28 @@ export const ButtonsWrapper = styled('div')(() => ({
   alignItems: 'center',
 }));
 
-export const Button = styled('div')(() => ({
-  fontSize: '1.2em',
+export const ConfirmationModalButton = styled('div')(({theme}) => ({
+  fontSize: '1em',
+  fontFamily: theme.typography.body2.fontFamily,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '10px',
-  borderRadius: '15px',
+  padding: '15px 10px',
+  borderRadius: '3px',
+  textAlign: 'center',
+  wordBreak: 'break-word',
   '&:hover': {
-    opacity: '0.8',
+    opacity: 0.8,
     cursor: 'pointer',
   },
-}));
-
-export const ConfirmButton = styled(Button)<IConfirmModalProps>(({ theme, severity }) => ({
-  backgroundColor: severity === 'success' ? theme.palette.success.main : theme.palette.error.main,
-  border: `2px solid ${severity === 'success'? theme.palette.success.main : theme.palette.error.main}`,
+  border: 'none',
+  outline: 'none',
+  '&:focus': {
+    outline: 'none',
+    border: 'none',
+  },
+  backgroundColor: theme.palette.primary.dark,
   color: theme.palette.common.white,
-}));
-
-export const CancelButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-  border: `2px solid ${theme.palette.common.black}`,
-  color: theme.palette.text.primary,
-  marginLeft: '10%',
+  minWidth: '100px',
+  margin: '20px',
 }));
