@@ -5,11 +5,4 @@ export const HomeWrapper = styled('div')(() => ({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '50vh',
-}));
-
-export const HomeSubtitle = styled('h1')(() => ({
-  margin: 'auto',
-  textAlign: 'center',
-  width: '100%',
 }));

@@ -32,20 +32,27 @@ const ThemeConfig = ({ children }: any) => {
       },
       grey: {
         "100": '#b9b6b6',
+        "200": 'rgba(0, 0, 0, 0.5)',
       }
     },
     typography: {
       fontFamily: ['Montserrat', 'Ubuntu', '"Helvetica Neue"', 'Arial', 'sans-serif'].join(
         ',',
       ),
+      body1: {
+        fontFamily: 'Montserrat',
+      },
+      body2: {
+        fontFamily: 'Ubuntu',
+      },
     },
     breakpoints: {
       values: {
         xs: 0,
-        sm: 500,
-        md: 900,
-        lg: 1200,
-        xl: 1536,
+        sm: 450,
+        md: 700,
+        lg: 950,
+        xl: 1440,
       },
     },
     components: {
