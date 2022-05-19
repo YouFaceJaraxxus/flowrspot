@@ -7,21 +7,21 @@ interface IServiceConfig {
   filter?: any;
 }
 
-interface IAxiosServiceConfig extends IServiceConfig {
+interface IHttpServiceConfig extends IServiceConfig {
   axiosConfig?: AxiosRequestConfig;
 }
 interface IAxiosService {
   baseUrl?: string;
-  get: (path: string, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
-  post: (path: string, data: any, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
-  put: (path: string, data: any, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
-  patch: (path: string, data: any, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
-  delete: (path: string, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
+  get: (path: string, config?: IHttpServiceConfig) => Promise<AxiosResponse<any>>;
+  post: (path: string, data: any, config?: IHttpServiceConfig) => Promise<AxiosResponse<any>>;
+  put: (path: string, data: any, config?: IHttpServiceConfig) => Promise<AxiosResponse<any>>;
+  patch: (path: string, data: any, config?: IHttpServiceConfig) => Promise<AxiosResponse<any>>;
+  delete: (path: string, config?: IHttpServiceConfig) => Promise<AxiosResponse<any>>;
 };
 
 
 export type {
   IAxiosService,
   IServiceConfig,
-  IAxiosServiceConfig,
+  IHttpServiceConfig,
 }
