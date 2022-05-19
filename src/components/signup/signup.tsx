@@ -33,10 +33,6 @@ const Signup = () => {
     dispatch(openLoginModal());
   }
 
-  const handleConfirmationProfile = () => {
-    handleConfirmModalAnswer();
-  }
-
   const { handleSubmit, control, reset, clearErrors, setValue } = useForm<ISignupForm>();
 
   useEffect(() => {
@@ -211,8 +207,6 @@ const Signup = () => {
           handleClose={closeConfirmationModal}
           mainButtonAction={handleConfirmationOk}
           mainButtonText="Ok"
-          secondaryButtonAction={handleConfirmationProfile}
-          secondaryButtonText="Profile"
         />
       </>
     </CustomModal>
