@@ -11,6 +11,8 @@ import { DoubleInputWrapper } from './signupStyle';
 import moment from 'moment';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import { useEffect, useState } from 'react';
+import { ISignup } from '../../service/interfaces/usersService';
+import { signupAsync } from '../../redux/slices/usersSlice';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -33,14 +35,30 @@ const Signup = () => {
     dispatch(openLoginModal());
   }
 
-  const { handleSubmit, control, reset, clearErrors, setValue } = useForm<ISignupForm>();
+  const { getValues, handleSubmit, control, reset, clearErrors, setValue } = useForm<ISignupForm>();
 
   useEffect(() => {
     setValue("dateOfBirth", moment().format("MMM DD, YYYY"));
   }, [])
 
   const onSubmit = () => {
-    setConfirmationModalOpen(true);
+    const formData = getValues();
+    const signupData = {
+      email: formData.email,
+      password: formData.password,
+      date_of_birth: formData.dateOfBirth,
+      first_name: formData.name,
+      last_name: formData.lastName,
+    } as ISignup;
+    dispatch(signupAsync(signupData)).then((response) => {
+      if (response.payload) {
+        setConfirmationModalOpen(true);
+      }
+      else {
+        console.log('FAILED TO SIGNUP')
+      }
+    })
+
   }
 
   const handleCloseSignupModal = () => {

@@ -1,16 +1,24 @@
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import CustomModal from '../common/modal/customModal';
-import { selectCommon } from '../../redux/store/store';
+import { selectCommon, selectUsers } from '../../redux/store/store';
 import { closeProfileModal } from '../../redux/slices/commonSlice';
 import { ProfileAvatarWrapper, ProfileCloseButton, ProfileDetailKey, ProfileDetailPair, ProfileDetailValue, ProfileName, ProfileNameSightings, ProfileSightings, ProfileWrapper } from './profileStyle';
 import { Avatar } from '@mui/material';
 import { SubmitButton } from '../common/customForm/customFormStyle';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
+import { useEffect } from 'react';
+import { getCurrentUserAsync } from '../../redux/slices/usersSlice';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const { profileModalOpen } = useAppSelector(selectCommon);
+  const { currentUser } = useAppSelector(selectUsers);
+
+  useEffect(() => {
+    //blocked as I can't pass the auth_token I get when logging in (CORS)
+    //dispatch(getCurrentUserAsync());
+  }, [])
 
   const handleCloseProfileModal = () => {
     dispatch(closeProfileModal());
@@ -84,7 +92,7 @@ const Profile = () => {
             marginTop: '20px'
           }}
           onClick={handleLogoutClicked}
-          >Logout</SubmitButton>
+        >Logout</SubmitButton>
       </ProfileWrapper>
     </CustomModal >
 

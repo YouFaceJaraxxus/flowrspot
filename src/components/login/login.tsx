@@ -1,24 +1,23 @@
 import { Controller, useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { EMAIL_REGEX, IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import ILoginForm from './loginForm';
 import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
-import { HOME_PATH } from '../../router/route/routeConfig';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
 import { closeLoginModal, openProfileModal } from '../../redux/slices/commonSlice';
 import CustomInputField from '../common/customInputField/customInputField';
 import { useState } from 'react';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
+import { ILogin } from '../../service/interfaces/usersService';
+import { loginAsync } from '../../redux/slices/usersSlice';
 
 const Login = () => {
-  const history = useHistory();
   const dispatch = useAppDispatch();
   const { loginModalOpen } = useAppSelector(selectCommon);
 
-  const { handleSubmit, control, reset, clearErrors } = useForm<ILoginForm>();
+  const { getValues, handleSubmit, control, reset, clearErrors } = useForm<ILoginForm>();
 
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const closeConfirmationModal = () => {
@@ -42,9 +41,18 @@ const Login = () => {
   }
 
   const onSubmit = () => {
-    dispatch(setIsLogged(true));
-    localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
-    setConfirmationModalOpen(true);
+    const data = getValues() as ILogin;
+    dispatch(loginAsync(data)).then((response) => {
+      if (response.payload) {
+        dispatch(setIsLogged(true));
+        localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
+        setConfirmationModalOpen(true);
+      }
+      else {
+        console.log('LOGIN FAILED')
+      }
+    })
+
   }
 
   const handleCloseLoginModal = () => {
