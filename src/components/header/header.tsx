@@ -151,7 +151,7 @@ const Header = () => {
                   drawerOpen ?
                     <AppBarCloseIcon />
                     :
-                    <AppBarMenuIcon />
+                    <AppBarMenuIcon role="openDrawer"/>
                 }
 
               </IconButton>

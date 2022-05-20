@@ -14,5 +14,5 @@ test('renders app', () => {
   <Provider store={store}>
     <App />
   </Provider>)
-
+  expect(store.getState().common.drawerOpen).toBe(false);
 })
