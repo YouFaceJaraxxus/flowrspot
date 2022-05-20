@@ -25,6 +25,12 @@ const pages = [
     protected: false,
     route: HOME_PATH,
     title: 'Flowers'
+  },
+  {
+    id: 2,
+    protected: false,
+    route: HOME_PATH,
+    title: 'Favorites'
   }
 ] as IHeaderTab[];
 
