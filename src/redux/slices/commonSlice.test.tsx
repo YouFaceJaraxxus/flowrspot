@@ -1,6 +1,7 @@
 import { SUCCESS } from '../../util/constants'
 import reducer, { initialState, openLoginModal } from './commonSlice'
 
+
 test('should set modal open to true', () => {
   const previousState = initialState
   expect(reducer(previousState, openLoginModal())).toEqual({
