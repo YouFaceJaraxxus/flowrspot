@@ -1,11 +1,4 @@
-interface IHeaderTab {
-  id: number;
-  title: string;
-  route: string;
-  protected: boolean;
-};
-
-interface IHeaderSetting {
+interface IHeaderItem {
   id: number;
   title: string;
   action: Function;
@@ -13,6 +6,5 @@ interface IHeaderSetting {
 }
 
 export type {
-  IHeaderTab,
-  IHeaderSetting
+  IHeaderItem
 }

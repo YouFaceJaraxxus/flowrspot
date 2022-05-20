@@ -44,6 +44,14 @@ export const NavbarBox = styled('div')(() => ({
   alignItems: 'center',
 }));
 
+export const NavbarDrawerList = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  paddingLeft: '20px',
+}));
+
 export const NavbarMenuItem = styled(MenuItem)(({ theme }) => ({
   color: theme.palette.grey["300"],
   fontWeight: 'bolder',

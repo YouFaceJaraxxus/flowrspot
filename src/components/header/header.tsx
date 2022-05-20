@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,41 +7,37 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { setIsLogged } from '../../redux/slices/userSlice';
-import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
+import { IHeaderItem } from './headerConfig.model';
 import { selectCommon, selectUser } from '../../redux/store/store';
-import { AppBarCloseIcon, AppBarLogo, AppBarLogoText, AppBarLogoWrapper, AppBarMenuIcon, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
-import { openLoginModal, openProfileModal, openSignupModal, setTheme, toggleDrawer } from '../../redux/slices/commonSlice';
+import {
+  AppBarCloseIcon,
+  AppBarLogo,
+  AppBarLogoText,
+  AppBarLogoWrapper,
+  AppBarMenuIcon,
+  NavbarBox,
+  NavbarDrawerList,
+  NavbarMenuItem,
+  NavbarMenuItemPrimary,
+  NavbarNewAccountButton
+} from './headerStyle';
+import { openLoginModal, openProfileModal, openSignupModal, toggleDrawer } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import CustomDrawer from '../common/customDrawer/customDrawer';
 
-const pages = [
-  {
-    id: 1,
-    protected: false,
-    route: HOME_PATH,
-    title: 'Flowers'
-  },
-  {
-    id: 2,
-    protected: true,
-    route: HOME_PATH,
-    title: 'Favorites'
-  }
-] as IHeaderTab[];
+
 
 
 const Header = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector(selectUser);
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { drawerOpen } = useAppSelector(selectCommon);
 
 
@@ -50,56 +46,77 @@ const Header = () => {
     localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
   }
 
-  const settings = [{
-    id: 1,
-    action: handleLogout,
-    protected: true,
-    title: 'Logout'
-  }] as IHeaderSetting[]
 
-  const handleNavClick = (route: string, logout = false) => {
+
+  const navigateToPage = (route: string) => {
     history.push(route);
-    if (logout) handleLogout();
   }
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+
+
+  const handleHeaderItemClick = (headerItem: IHeaderItem) => {
+    headerItem.action();
+    closeDropdownAndDrawer();
+  }
+
+  const closeDropdownAndDrawer = () => {
+    dispatch(toggleDrawer(false));
+    setAnchorElUser(null);
+  }
+
+  const handleToggleDrawer = () => {
     dispatch(toggleDrawer(!drawerOpen));
-    //setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (page: IHeaderTab) => {
-    setAnchorElNav(null);
-    history.push(page.route);
-  };
-
-  const handleCloseUserMenu = (setting: IHeaderSetting) => {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    if (setting.action) setting.action();
   };
 
   const handleLoginClick = () => {
-    setAnchorElNav(null);
     dispatch(openLoginModal());
   }
 
   const handleSignupClick = () => {
-    setAnchorElNav(null);
     dispatch(openSignupModal());
-  }
-
-  const toggleTheme = (theme: 'light' | 'dark') => {
-    dispatch(setTheme(theme));
-    setAnchorElUser(null);
   }
 
   const handleProfileClick = () => {
     dispatch(openProfileModal());
     setAnchorElUser(null);
-    setAnchorElNav(null);
   }
+
+  const pages = [
+    {
+      id: 1,
+      protected: false,
+      action: () => { navigateToPage(HOME_PATH) },
+      title: 'Flowers'
+    },
+    {
+      id: 2,
+      protected: true,
+      action: () => { navigateToPage(HOME_PATH) },
+      title: 'Favorites'
+    }
+  ] as IHeaderItem[];
+
+  const settings = [
+    {
+      id: 1,
+      title: 'Profile',
+      protected: true,
+      action: handleProfileClick
+    },
+    {
+      id: 2,
+      action: handleLogout,
+      protected: true,
+      title: 'Logout'
+    }] as IHeaderItem[];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -111,7 +128,7 @@ const Header = () => {
           <Toolbar disableGutters>
             <AppBarLogoWrapper
               onClick={() => {
-                handleNavClick('/home')
+                navigateToPage('/home')
               }}
             >
               <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
@@ -125,7 +142,7 @@ const Header = () => {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleOpenNavMenu}
+                onClick={handleToggleDrawer}
                 color="inherit"
               >
                 {
@@ -136,73 +153,12 @@ const Header = () => {
                 }
 
               </IconButton>
-              <Menu
-
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map((page) => (!page.protected || isLogged) && (
-                  <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
-                    <Typography textAlign="center">{page.title}</Typography>
-                  </NavbarMenuItem>
-                ))}
-                {
-                  !isLogged && (
-                    <NavbarMenuItemPrimary>
-                      <Typography textAlign="center" onClick={handleLoginClick}>Login</Typography>
-                    </NavbarMenuItemPrimary>
-                  )
-                }
-                {
-                  !isLogged && (
-                    <NavbarNewAccountButton onClick={handleSignupClick}
-                      sx={{
-                        margin: 'auto 10px auto 10px',
-                      }}>
-                      New account
-                    </NavbarNewAccountButton>
-                  )
-                }
-                <MenuItem onClick={() => { toggleTheme('light') }}>
-                  <Typography textAlign="center">Light theme</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => { toggleTheme('dark'); }}>
-                  <Typography textAlign="center">Dark theme</Typography>
-                </MenuItem>
-                {
-                  isLogged && (
-                    <MenuItem onClick={handleProfileClick}>
-                      <Typography textAlign="center" >Profile</Typography>
-                    </MenuItem>
-                  )
-                }
-
-                {settings.map((setting) => (
-                  <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
-                    <Typography textAlign="center">{setting.title}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </NavbarBox>
 
 
             <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (!page.protected || isLogged) && (
-                <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
+                <NavbarMenuItem key={page.id} onClick={() => handleHeaderItemClick(page)}>
                   <Typography textAlign="center">{page.title}</Typography>
                 </NavbarMenuItem>
               ))}
@@ -249,23 +205,10 @@ const Header = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={() => { toggleTheme('light') }}>
-                  <Typography textAlign="center">Light theme</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => { toggleTheme('dark'); }}>
-                  <Typography textAlign="center">Dark theme</Typography>
-                </MenuItem>
-                {
-                  isLogged && (
-                    <MenuItem onClick={handleProfileClick}>
-                      <Typography textAlign="center">Profile</Typography>
-                    </MenuItem>
-                  )
-                }
                 {settings.map((setting) => (
-                  <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
+                  <NavbarMenuItem key={setting.id} onClick={() => handleHeaderItemClick(setting)}>
                     <Typography textAlign="center">{setting.title}</Typography>
-                  </MenuItem>
+                  </NavbarMenuItem>
                 ))}
               </Menu>
             </Box>
@@ -274,7 +217,38 @@ const Header = () => {
         </Container>
       </AppBar >
       <CustomDrawer>
-        <div>DRAWER</div>
+        <NavbarDrawerList>
+          {pages.map((page) => (!page.protected || isLogged) && (
+            <NavbarMenuItem key={page.id} onClick={() => handleHeaderItemClick(page)}>
+              <Typography textAlign="center">{page.title}</Typography>
+            </NavbarMenuItem>
+          ))}
+          {
+            !isLogged && (
+              <NavbarMenuItemPrimary onClick={handleLoginClick}>
+                <Typography textAlign="center">Login</Typography>
+              </NavbarMenuItemPrimary>
+            )
+          }
+
+          {settings.map((setting) => (!setting.protected || isLogged) && (
+            <NavbarMenuItem key={setting.id} onClick={() => handleHeaderItemClick(setting)}>
+              <Typography textAlign="center">{setting.title}</Typography>
+            </NavbarMenuItem>
+          ))}
+
+          {
+            !isLogged && (
+              <NavbarNewAccountButton onClick={handleSignupClick} sx={{
+                margin: 'auto 0 auto 10px',
+              }}>
+                New account
+              </NavbarNewAccountButton>
+            )
+          }
+
+
+        </NavbarDrawerList>
       </CustomDrawer>
     </Box>
   );
