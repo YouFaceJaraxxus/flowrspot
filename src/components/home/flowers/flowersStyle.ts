@@ -1,4 +1,9 @@
+import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
+export interface IFlowerFavoriteStarAvatar {
+  selected: boolean;
+}
 
 export const FlowersWrapper = styled('div')(() => ({
   display: 'flex',
@@ -20,14 +25,14 @@ export const FlowersGrid = styled('div')(() => ({
   maxWidth: '1024px',
 }));
 
-export const FlowersGridItem = styled('div')(({theme}) => ({
+export const FlowersGridItem = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   width: '23%',
-  height: '300px',  
+  height: '300px',
   padding: '1%',
   [theme.breakpoints.down('lg')]: {
     width: '31%',
@@ -38,6 +43,10 @@ export const FlowersGridItem = styled('div')(({theme}) => ({
   [theme.breakpoints.down('sm')]: {
     width: '98%',
   },
+  '&:hover':{
+    opacity: '0.8',
+    cursor: 'pointer',
+  }
 }));
 
 export const FlowerImageWrapper = styled('div')(() => ({
@@ -57,6 +66,27 @@ export const FlowerImage = styled('img')(() => ({
   borderRadius: '3px',
 }));
 
+export const FlowerFavoriteStarWrapper = styled('div')(() => ({
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  top: '20px',
+  right: '20px',
+  color: 'green',
+}));
+
+export const FlowerFavoriteStarAvatar = styled('div')<IFlowerFavoriteStarAvatar>(({ theme, selected }) => ({
+  borderRadius: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: selected ? theme.palette.primary.light : theme.palette.common.white,
+  width: '25px',
+  height: '25px',
+}));
+
 export const FlowerDetails = styled('div')(() => ({
   position: 'absolute',
   display: 'flex',
@@ -68,7 +98,7 @@ export const FlowerDetails = styled('div')(() => ({
   transform: 'translate(-50%, 0)',
 }));
 
-const FlowerDetailItem = styled('span')(({theme}) => ({
+const FlowerDetailItem = styled('span')(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.common.white,
   fontFamily: theme.typography.body2.fontFamily,
@@ -86,7 +116,7 @@ export const FlowerLatinName = styled(FlowerDetailItem)(() => ({
   opacity: '0.7',
 }));
 
-export const FlowerSightings = styled(FlowerDetailItem)(({theme}) => ({
+export const FlowerSightings = styled(FlowerDetailItem)(({ theme }) => ({
   fontSize: '0.9em',
   marginTop: '20px',
   padding: '10px',

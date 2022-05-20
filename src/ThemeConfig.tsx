@@ -7,7 +7,7 @@ const ThemeConfig = ({ children }: any) => {
         main: '#fff',
         contrastText: '#fff',
         dark: 'rgba(236, 188, 179, 1)',
-        light: 'rgba(236, 188, 179, 1)'
+        light: 'rgba(236, 188, 179, 1)',
       },
       secondary: {
         main: '#e9e7ff',

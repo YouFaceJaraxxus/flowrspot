@@ -11,6 +11,7 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const { flowers } = useAppSelector(selectFlowers);
   const [searchInput, setSearchInput] = useState('');
+  const [selectedFlower, setSelectedFlower] = useState(null as IFlower);
 
   useEffect(() => {
     dispatch(getFlowersAsync());
@@ -25,7 +26,7 @@ const Home = () => {
   return (
     <HomeWrapper>
       <FlowersSearch setSearchInput={setSearchInput} />
-      <Flowers flowers={filterFlowers(flowers)} />
+      <Flowers selectedFlower={selectedFlower} setSelectedFlower={setSelectedFlower} flowers={filterFlowers(flowers)} />
     </HomeWrapper>
   )
 };
