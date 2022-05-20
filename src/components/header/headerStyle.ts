@@ -63,8 +63,8 @@ export const NavbarNewAccountButton = styled('button')(({ theme }) => ({
   alignItems: 'center',
   padding: '10px 15px',
   borderRadius: '50px',
+  minWidth: '150px',
   textAlign: 'center',
-  wordBreak: 'break-word',
   '&:hover': {
     opacity: 0.8,
     cursor: 'pointer',
@@ -75,7 +75,6 @@ export const NavbarNewAccountButton = styled('button')(({ theme }) => ({
     outline: 'none',
     border: 'none',
   },
-  margin: 'auto 0 auto 10px',
   backgroundColor: theme.palette.primary.dark,
   color: theme.palette.common.white,
 }));

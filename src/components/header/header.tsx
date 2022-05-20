@@ -142,15 +142,18 @@ const Header = () => {
               }
               {
                 !isLogged && (
-                  <NavbarMenuItemPrimary onClick={handleSignupClick}>
-                    <Typography textAlign="center">New account</Typography>
-                  </NavbarMenuItemPrimary>
+                  <NavbarNewAccountButton onClick={handleSignupClick}
+                    sx={{
+                      margin: 'auto 10px auto 10px',
+                    }}>
+                    New account
+                  </NavbarNewAccountButton>
                 )
               }
             </Menu>
           </NavbarBox>
 
-          
+
           <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (!page.protected || isLogged) && (
               <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
@@ -167,7 +170,9 @@ const Header = () => {
 
             {
               !isLogged && (
-                <NavbarNewAccountButton onClick={handleSignupClick}>
+                <NavbarNewAccountButton onClick={handleSignupClick} sx={{
+                  margin: 'auto 0 auto 10px',
+                }}>
                   New account
                 </NavbarNewAccountButton>
               )
