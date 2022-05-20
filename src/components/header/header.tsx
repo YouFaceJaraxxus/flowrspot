@@ -15,12 +15,19 @@ import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
-import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
-import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
-import { openLoginModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
+import { AppBarLogo, AppBarLogoWrapper, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
+import { setTheme } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
+import { HOME_PATH } from '../../router/route/routeConfig';
 
-const pages = [] as IHeaderTab[];
+const pages = [
+  {
+    id: 1,
+    protected: false,
+    route: HOME_PATH,
+    title: 'Flowers'
+  }
+] as IHeaderTab[];
 
 
 const Header = () => {
@@ -31,38 +38,7 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
 
-  const settings = isLogged ? [
-    {
-      id: 1,
-      title: 'Logout',
-      action: () => {
-        dispatch(setIsLogged(false));
-        localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
-      },
-      protected: false,
-    }
-  ] as IHeaderSetting[]
-
-    :
-
-    [
-      {
-        id: 1,
-        title: 'Login',
-        action: () => {
-          dispatch(openLoginModal());
-        },
-        protected: false,
-      },
-      {
-        id: 2,
-        title: 'Signup',
-        action: () => {
-          dispatch(openSignupModal());
-        },
-        protected: false,
-      }
-    ] as IHeaderSetting[];
+  const settings = [] as IHeaderSetting[]
 
   const handleNavClick = (route: string, logout = false) => {
     history.push(route);
@@ -106,7 +82,7 @@ const Header = () => {
             <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
             FlowrSpot
           </AppBarLogoWrapper>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <NavbarBox sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -137,12 +113,18 @@ const Header = () => {
               }}
             >
               {pages.map((page) => (!page.protected || isLogged) && (
-                <MenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
+                <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page.title}</Typography>
-                </MenuItem>
+                </NavbarMenuItem>
               ))}
+              <NavbarMenuItemPrimary>
+                <Typography textAlign="center">Login</Typography>
+              </NavbarMenuItemPrimary>
+              <NavbarMenuItemPrimary>
+                <Typography textAlign="center">New account</Typography>
+              </NavbarMenuItemPrimary>
             </Menu>
-          </Box>
+          </NavbarBox>
 
           <AppBarLogoWrapper
             sx={{
@@ -156,24 +138,27 @@ const Header = () => {
           >
             <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
           </AppBarLogoWrapper>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (!page.protected || isLogged) && (
-              <Button
-                key={page.id}
-                onClick={() => handleCloseNavMenu(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.title}
-              </Button>
+              <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
+                <Typography textAlign="center">{page.title}</Typography>
+              </NavbarMenuItem>
             ))}
-          </Box>
+            <NavbarMenuItemPrimary>
+              <Typography textAlign="center">Login</Typography>
+            </NavbarMenuItemPrimary>
+            <NavbarNewAccountButton>
+              New account
+            </NavbarNewAccountButton>
+          </NavbarBox>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src="./images/profile_avatar.png" />
-              </IconButton>
-            </Tooltip>
+            {isLogged &&
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src="./images/profile_avatar.png" />
+                </IconButton>
+              </Tooltip>}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

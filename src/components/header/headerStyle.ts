@@ -1,6 +1,7 @@
+import { MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const AppBarLogoWrapper = styled('form')(() => ({
+export const AppBarLogoWrapper = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -12,4 +13,51 @@ export const AppBarLogo = styled('img')(() => ({
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
   height: '30px',
+}));
+
+export const NavbarBox = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+}));
+
+export const NavbarMenuItem = styled(MenuItem)(({ theme }) => ({
+  color: theme.palette.grey["300"],
+  fontWeight: 'bolder',
+  '& > p': {
+    fontWeight: 'bolder',
+  }
+}));
+
+export const NavbarMenuItemPrimary = styled(MenuItem)(({ theme }) => ({
+  color: theme.palette.primary.dark,
+  fontWeight: 'bolder',
+  '& > p': {
+    fontWeight: 'bolder',
+  }
+}));
+
+export const NavbarNewAccountButton = styled('button')(({ theme }) => ({
+  fontSize: '1em',
+  fontFamily: theme.typography.body2.fontFamily,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '10px 15px',
+  borderRadius: '50px',
+  textAlign: 'center',
+  wordBreak: 'break-word',
+  '&:hover': {
+    opacity: 0.8,
+    cursor: 'pointer',
+  },
+  border: 'none',
+  outline: 'none',
+  '&:focus': {
+    outline: 'none',
+    border: 'none',
+  },
+  margin: 'auto 0 auto 10px',
+  backgroundColor: theme.palette.primary.dark,
+  color: theme.palette.common.white,
 }));
