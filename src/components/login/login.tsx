@@ -12,10 +12,12 @@ import { useState } from 'react';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import { ILogin } from '../../service/interfaces/usersService';
 import { loginAsync } from '../../redux/slices/usersSlice';
+import { Error } from '../common/customForm/customFormStyle';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const { loginModalOpen } = useAppSelector(selectCommon);
+  const [loginError, setLoginError] = useState(undefined as string);
 
   const { getValues, handleSubmit, control, reset, clearErrors } = useForm<ILoginForm>();
 
@@ -41,6 +43,7 @@ const Login = () => {
   }
 
   const onSubmit = () => {
+    setLoginError(null);
     const data = getValues() as ILogin;
     dispatch(loginAsync(data)).then((response) => {
       if (response.payload) {
@@ -49,13 +52,14 @@ const Login = () => {
         setConfirmationModalOpen(true);
       }
       else {
-        console.log('LOGIN FAILED')
+        setLoginError('Invalid credentials.');
       }
     })
 
   }
 
   const handleCloseLoginModal = () => {
+    setLoginError(null);
     dispatch(closeLoginModal());
     clearErrors();
   }
@@ -133,6 +137,11 @@ const Login = () => {
             >
               Login to your account
             </SubmitButton>
+            {loginError && (
+              <Error>
+                {loginError}
+              </Error>
+            )}
           </CustomForm>
         </FormWrapper>
         <ConfirmModal

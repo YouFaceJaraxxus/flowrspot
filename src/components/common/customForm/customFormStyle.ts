@@ -63,3 +63,9 @@ export const SubmitButton = styled('button')<ICustomButton>(({ theme, width, mar
 export const FormTextField = styled(TextField)(() => ({
   minWidth: '300px'
 }));
+
+export const Error = styled('span')(({ theme }) => ({
+  color: theme.palette.error.main,
+  marginLeft: '20px',
+  wordBreak: 'break-word',
+}));

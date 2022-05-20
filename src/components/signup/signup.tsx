@@ -2,7 +2,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { EMAIL_REGEX } from '../../util/constants';
 import ISignupForm from './signupForm';
-import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
+import { CustomForm, SubmitButton, FormTitle, FormWrapper, Error } from '../common/customForm/customFormStyle';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
 import { closeSignupModal, openLoginModal } from '../../redux/slices/commonSlice';
@@ -17,6 +17,7 @@ import { signupAsync } from '../../redux/slices/usersSlice';
 const Signup = () => {
   const dispatch = useAppDispatch();
   const { signupModalOpen } = useAppSelector(selectCommon);
+  const [signupError, setSignupError] = useState(undefined as string);
 
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const closeConfirmationModal = () => {
@@ -42,6 +43,7 @@ const Signup = () => {
   }, [])
 
   const onSubmit = () => {
+    setSignupError(null);
     const formData = getValues();
     const signupData = {
       email: formData.email,
@@ -55,7 +57,7 @@ const Signup = () => {
         setConfirmationModalOpen(true);
       }
       else {
-        console.log('FAILED TO SIGNUP')
+        setSignupError('Registration error.')
       }
     })
 
@@ -64,6 +66,7 @@ const Signup = () => {
   const handleCloseSignupModal = () => {
     dispatch(closeSignupModal());
     clearErrors();
+    setSignupError(null);
   }
 
   return (
@@ -216,6 +219,15 @@ const Signup = () => {
             >
               Create account
             </SubmitButton>
+
+            {
+              signupError && (
+                <Error>
+                  {signupError}
+                </Error>
+              )
+            }
+
           </CustomForm>
         </FormWrapper>
 
