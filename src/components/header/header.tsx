@@ -89,9 +89,6 @@ const Header = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AppBarLogoWrapper
-            sx={{
-              display: { xs: 'none', md: 'flex' }, mr: 1
-            }}
             onClick={() => {
               handleNavClick('/home')
             }}
@@ -101,7 +98,7 @@ const Header = () => {
               FlowrSpot
             </AppBarLogoText>
           </AppBarLogoWrapper>
-          <NavbarBox sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <NavbarBox sx={{ display: { xs: 'flex', md: 'none' }, flex: 1 }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -153,21 +150,7 @@ const Header = () => {
             </Menu>
           </NavbarBox>
 
-          <AppBarLogoWrapper
-            sx={{
-              display: { xs: 'flex', md: 'none' },
-              mr: 1,
-              flexGrow: 1,
-            }}
-            onClick={() => {
-              handleNavClick('/home')
-            }}
-          >
-            <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
-            <AppBarLogoText>
-              FlowrSpot
-            </AppBarLogoText>
-          </AppBarLogoWrapper>
+          
           <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (!page.protected || isLogged) && (
               <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
