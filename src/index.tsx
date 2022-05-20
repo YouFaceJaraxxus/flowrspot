@@ -5,15 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <Suspense fallback="loading">
     <React.StrictMode>
       <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <App />
       </Provider>
     </React.StrictMode>
   </Suspense>,

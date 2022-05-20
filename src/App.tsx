@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import { setCheckedIsLogged, setIsLogged } from './redux/slices/userSlice';
 import { useAppDispatch } from './redux/store/hooks';
@@ -25,11 +26,13 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <ThemeConfig>
-      <Layout>
-        <Router />
-      </Layout>
-    </ThemeConfig>
+    <BrowserRouter>
+      <ThemeConfig>
+        <Layout>
+          <Router />
+        </Layout>
+      </ThemeConfig>
+    </BrowserRouter>
   );
 }
 
