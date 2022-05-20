@@ -17,8 +17,8 @@ import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
-import { AccountCircle } from '@mui/icons-material';
 import { openLoginModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
+import { Avatar } from '@mui/material';
 
 const pages = [] as IHeaderTab[];
 
@@ -171,7 +171,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircle />
+                <Avatar src="./images/profile_avatar.png" />
               </IconButton>
             </Tooltip>
             <Menu
