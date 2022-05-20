@@ -13,7 +13,7 @@ const Home = () => {
   const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
-    //dispatch(getFlowersAsync());
+    dispatch(getFlowersAsync());
   }, []);
 
   const filterFlowers = (flowers: IFlower[]) => {
