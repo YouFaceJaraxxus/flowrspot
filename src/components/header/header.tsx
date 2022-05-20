@@ -72,10 +72,12 @@ const Header = () => {
   };
 
   const handleLoginClick = () => {
+    setAnchorElNav(null);
     dispatch(openLoginModal());
   }
 
   const handleSignupClick = () => {
+    setAnchorElNav(null);
     dispatch(openSignupModal());
   }
 
@@ -150,6 +152,17 @@ const Header = () => {
                   </NavbarNewAccountButton>
                 )
               }
+              <MenuItem>
+                <Typography textAlign="center" onClick={() => { toggleTheme('light') }}>Light theme</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center" onClick={() => { toggleTheme('dark'); }}>Dark theme</Typography>
+              </MenuItem>
+              {settings.map((setting) => (
+                <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
+                  <Typography textAlign="center">{setting.title}</Typography>
+                </MenuItem>
+              ))}
             </Menu>
           </NavbarBox>
 
@@ -182,8 +195,8 @@ const Header = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {isLogged &&
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Tooltip title="Open settings" sx={{ display: { xs: 'none', md: 'block' } }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ display: { xs: 'none', md: 'block' } }}>
                   <Avatar src="./images/profile_avatar.png" />
                 </IconButton>
               </Tooltip>}
