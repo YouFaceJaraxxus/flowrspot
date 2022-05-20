@@ -28,7 +28,7 @@ const pages = [
   },
   {
     id: 2,
-    protected: false,
+    protected: true,
     route: HOME_PATH,
     title: 'Favorites'
   }
