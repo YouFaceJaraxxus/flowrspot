@@ -1,10 +1,11 @@
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import { useAppDispatch, useAppSelector } from '../../../redux/store/hooks';
 import { selectCommon } from '../../../redux/store/store';
 import { toggleDrawer } from '../../../redux/slices/commonSlice';
+import { CustomDrawerWrapper } from './customDrawerStyle';
+
 
 
 const CustomDrawer = ({ children }: any) => {
@@ -21,7 +22,6 @@ const CustomDrawer = ({ children }: any) => {
         ) {
           return;
         }
-
         dispatch(toggleDrawer(false));
       };
 
@@ -31,18 +31,19 @@ const CustomDrawer = ({ children }: any) => {
       anchor="right"
       open={drawerOpen}
       onClose={closeDrawer()}
+      sx={{
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: { boxSizing: 'border-box' },
+      }}
     >
-      <Box
-        sx={{ width: '90vw' }}
+      <CustomDrawerWrapper
         role="presentation"
-        onClick={closeDrawer()}
-        onKeyDown={closeDrawer()}
       >
         <Divider />
         <List>
           {children}
         </List>
-      </Box>
+      </CustomDrawerWrapper>
     </Drawer>
   );
 }

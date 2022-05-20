@@ -12,8 +12,8 @@ import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
-import { selectUser } from '../../redux/store/store';
-import { AppBarLogo, AppBarLogoText, AppBarLogoWrapper, AppBarMenuIcon, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
+import { selectCommon, selectUser } from '../../redux/store/store';
+import { AppBarCloseIcon, AppBarLogo, AppBarLogoText, AppBarLogoWrapper, AppBarMenuIcon, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
 import { openLoginModal, openProfileModal, openSignupModal, setTheme, toggleDrawer } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
@@ -42,6 +42,7 @@ const Header = () => {
   const { isLogged } = useAppSelector(selectUser);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const { drawerOpen } = useAppSelector(selectCommon);
 
 
   const handleLogout = () => {
@@ -62,7 +63,7 @@ const Header = () => {
   }
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    dispatch(toggleDrawer(true));
+    dispatch(toggleDrawer(!drawerOpen));
     //setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -101,49 +102,105 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AppBarLogoWrapper
-            onClick={() => {
-              handleNavClick('/home')
-            }}
-          >
-            <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
-            <AppBarLogoText>
-              FlowrSpot
-            </AppBarLogoText>
-          </AppBarLogoWrapper>
-          <NavbarBox sx={{ display: { xs: 'flex', md: 'none' }, flex: 1 }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+    <Box sx={{ display: 'flex' }}>
+      <AppBar position="static" sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        ...(drawerOpen && { boxShadow: 'none' }),
+      }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <AppBarLogoWrapper
+              onClick={() => {
+                handleNavClick('/home')
+              }}
             >
-              <AppBarMenuIcon />
-            </IconButton>
-            <Menu
+              <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
+              <AppBarLogoText>
+                FlowrSpot
+              </AppBarLogoText>
+            </AppBarLogoWrapper>
+            <NavbarBox sx={{ display: { xs: 'flex', md: 'none' }, flex: 1 }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                {
+                  drawerOpen ?
+                    <AppBarCloseIcon />
+                    :
+                    <AppBarMenuIcon />
+                }
 
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
+              </IconButton>
+              <Menu
+
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (!page.protected || isLogged) && (
+                  <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
+                    <Typography textAlign="center">{page.title}</Typography>
+                  </NavbarMenuItem>
+                ))}
+                {
+                  !isLogged && (
+                    <NavbarMenuItemPrimary>
+                      <Typography textAlign="center" onClick={handleLoginClick}>Login</Typography>
+                    </NavbarMenuItemPrimary>
+                  )
+                }
+                {
+                  !isLogged && (
+                    <NavbarNewAccountButton onClick={handleSignupClick}
+                      sx={{
+                        margin: 'auto 10px auto 10px',
+                      }}>
+                      New account
+                    </NavbarNewAccountButton>
+                  )
+                }
+                <MenuItem onClick={() => { toggleTheme('light') }}>
+                  <Typography textAlign="center">Light theme</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => { toggleTheme('dark'); }}>
+                  <Typography textAlign="center">Dark theme</Typography>
+                </MenuItem>
+                {
+                  isLogged && (
+                    <MenuItem onClick={handleProfileClick}>
+                      <Typography textAlign="center" >Profile</Typography>
+                    </MenuItem>
+                  )
+                }
+
+                {settings.map((setting) => (
+                  <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
+                    <Typography textAlign="center">{setting.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </NavbarBox>
+
+
+            <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (!page.protected || isLogged) && (
                 <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page.title}</Typography>
@@ -151,121 +208,75 @@ const Header = () => {
               ))}
               {
                 !isLogged && (
-                  <NavbarMenuItemPrimary>
-                    <Typography textAlign="center" onClick={handleLoginClick}>Login</Typography>
+                  <NavbarMenuItemPrimary onClick={handleLoginClick}>
+                    <Typography textAlign="center">Login</Typography>
                   </NavbarMenuItemPrimary>
                 )
               }
+
               {
                 !isLogged && (
-                  <NavbarNewAccountButton onClick={handleSignupClick}
-                    sx={{
-                      margin: 'auto 10px auto 10px',
-                    }}>
+                  <NavbarNewAccountButton onClick={handleSignupClick} sx={{
+                    margin: 'auto 0 auto 10px',
+                  }}>
                     New account
                   </NavbarNewAccountButton>
                 )
               }
-              <MenuItem onClick={() => { toggleTheme('light') }}>
-                <Typography textAlign="center">Light theme</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => { toggleTheme('dark'); }}>
-                <Typography textAlign="center">Dark theme</Typography>
-              </MenuItem>
-              {
-                isLogged && (
-                  <MenuItem onClick={handleProfileClick}>
-                    <Typography textAlign="center" >Profile</Typography>
-                  </MenuItem>
-                )
-              }
 
-              {settings.map((setting) => (
-                <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
-                  <Typography textAlign="center">{setting.title}</Typography>
+            </NavbarBox>
+
+            <Box sx={{ flexGrow: 0 }}>
+              {isLogged &&
+                <Tooltip title="Open settings" sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <IconButton onClick={handleOpenUserMenu} sx={{ display: { xs: 'none', md: 'block' } }}>
+                    <Avatar src="./images/profile_avatar.png" />
+                  </IconButton>
+                </Tooltip>}
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={() => { toggleTheme('light') }}>
+                  <Typography textAlign="center">Light theme</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </NavbarBox>
-
-
-          <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (!page.protected || isLogged) && (
-              <NavbarMenuItem key={page.id} onClick={() => handleCloseNavMenu(page)}>
-                <Typography textAlign="center">{page.title}</Typography>
-              </NavbarMenuItem>
-            ))}
-            {
-              !isLogged && (
-                <NavbarMenuItemPrimary onClick={handleLoginClick}>
-                  <Typography textAlign="center">Login</Typography>
-                </NavbarMenuItemPrimary>
-              )
-            }
-
-            {
-              !isLogged && (
-                <NavbarNewAccountButton onClick={handleSignupClick} sx={{
-                  margin: 'auto 0 auto 10px',
-                }}>
-                  New account
-                </NavbarNewAccountButton>
-              )
-            }
-
-          </NavbarBox>
-
-          <Box sx={{ flexGrow: 0 }}>
-            {isLogged &&
-              <Tooltip title="Open settings" sx={{ display: { xs: 'none', md: 'block' } }}>
-                <IconButton onClick={handleOpenUserMenu} sx={{ display: { xs: 'none', md: 'block' } }}>
-                  <Avatar src="./images/profile_avatar.png" />
-                </IconButton>
-              </Tooltip>}
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={() => { toggleTheme('light') }}>
-                <Typography textAlign="center">Light theme</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => { toggleTheme('dark'); }}>
-                <Typography textAlign="center">Dark theme</Typography>
-              </MenuItem>
-              {
-                isLogged && (
-                  <MenuItem onClick={handleProfileClick}>
-                    <Typography textAlign="center">Profile</Typography>
-                  </MenuItem>
-                )
-              }
-              {settings.map((setting) => (
-                <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
-                  <Typography textAlign="center">{setting.title}</Typography>
+                <MenuItem onClick={() => { toggleTheme('dark'); }}>
+                  <Typography textAlign="center">Dark theme</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-        <CustomDrawer>
-          <div>
-            DRAWAR
-          </div>
-        </CustomDrawer>
-      </Container>
-    </AppBar >
+                {
+                  isLogged && (
+                    <MenuItem onClick={handleProfileClick}>
+                      <Typography textAlign="center">Profile</Typography>
+                    </MenuItem>
+                  )
+                }
+                {settings.map((setting) => (
+                  <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
+                    <Typography textAlign="center">{setting.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+
+        </Container>
+      </AppBar >
+      <CustomDrawer>
+        <div>DRAWER</div>
+      </CustomDrawer>
+    </Box>
   );
 };
 export default Header;

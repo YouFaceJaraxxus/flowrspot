@@ -1,4 +1,5 @@
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -30,7 +31,11 @@ export const AppBarLogoText = styled('div')(({theme}) => ({
 }));
 
 export const AppBarMenuIcon = styled(MenuIcon)(({theme}) => ({
-  color: theme.palette.primary.dark,
+  color: theme.palette.grey["300"],
+}));
+
+export const AppBarCloseIcon = styled(CloseIcon)(({theme}) => ({
+  color: theme.palette.grey["300"],
 }));
 
 export const NavbarBox = styled('div')(() => ({
