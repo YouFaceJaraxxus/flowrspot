@@ -1,24 +1,8 @@
 import { SUCCESS } from '../../util/constants'
-import reducer, { openLoginModal } from './commonSlice'
+import reducer, { initialState, openLoginModal } from './commonSlice'
 
-test('should open modal', () => {
-  const previousState = {
-    theme: 'light',
-    snackbarConfig: {
-      showSnackbar: false,
-      snackbarText: '',
-      snackbarType: SUCCESS,
-    },
-    progressCircleConfig: {
-      showProgress: false,
-      progressText: '',
-      progressSize: 0,
-    },
-    loginModalOpen: false,
-    signupModalOpen: false,
-    profileModalOpen: false,
-    drawerOpen: false,
-  }
+test('should set modal open to true', () => {
+  const previousState = initialState
   expect(reducer(previousState, openLoginModal())).toEqual({
     theme: 'light',
     snackbarConfig: {

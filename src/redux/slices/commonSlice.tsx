@@ -25,7 +25,7 @@ interface ICommon {
 
 
 
-const initialState: ICommon = {
+export const initialState: ICommon = {
   theme: 'light',
   snackbarConfig: {
     showSnackbar: false,
