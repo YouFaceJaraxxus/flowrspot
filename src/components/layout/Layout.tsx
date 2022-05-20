@@ -2,6 +2,7 @@ import { useAppSelector } from '../../redux/store/hooks';
 import { selectCommon } from '../../redux/store/store';
 import ProgressCircle from '../common/progressCircle/progressCircle';
 import Snackbar from '../common/snackbar/snackbar';
+import CustomDrawer from '../common/customDrawer/customDrawer';
 import Header from '../header/header';
 import Login from '../login/login';
 import Profile from '../profile/profile';

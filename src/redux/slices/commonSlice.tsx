@@ -20,6 +20,7 @@ interface ICommon {
   loginModalOpen: boolean;
   signupModalOpen: boolean;
   profileModalOpen: boolean;
+  drawerOpen: boolean;
 }
 
 
@@ -39,6 +40,7 @@ const initialState: ICommon = {
   loginModalOpen: false,
   signupModalOpen: false,
   profileModalOpen: false,
+  drawerOpen: false,
 };
 
 const commonSlice = createSlice({
@@ -89,7 +91,10 @@ const commonSlice = createSlice({
     },
     closeProfileModal: (state) => {
       state.profileModalOpen = false;
-    }
+    },
+    toggleDrawer: (state, action: PayloadAction<boolean>)=>{
+      state.drawerOpen = action.payload;
+    },
   },
 })
 
@@ -104,7 +109,8 @@ export const {
   openSignupModal,
   closeSignupModal,
   openProfileModal,
-  closeProfileModal
+  closeProfileModal,
+  toggleDrawer,
 } = commonSlice.actions;
 
 export default commonSlice.reducer; 

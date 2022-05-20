@@ -14,10 +14,11 @@ import { setIsLogged } from '../../redux/slices/userSlice';
 import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoText, AppBarLogoWrapper, AppBarMenuIcon, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
-import { openLoginModal, openProfileModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
+import { openLoginModal, openProfileModal, openSignupModal, setTheme, toggleDrawer } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
+import CustomDrawer from '../common/customDrawer/customDrawer';
 
 const pages = [
   {
@@ -61,7 +62,8 @@ const Header = () => {
   }
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+    dispatch(toggleDrawer(true));
+    //setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -257,6 +259,11 @@ const Header = () => {
             </Menu>
           </Box>
         </Toolbar>
+        <CustomDrawer>
+          <div>
+            DRAWAR
+          </div>
+        </CustomDrawer>
       </Container>
     </AppBar >
   );
