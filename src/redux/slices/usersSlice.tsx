@@ -21,8 +21,8 @@ const initialState: UsersState = {
 
 export const getCurrentUserAsync = createAsyncThunk(
   'users/getUsers',
-  async (): Promise<IGetCurrentUserResponse> => {
-    const response = await usersService.getCurrentUserInfo();
+  async (authToken: string): Promise<IGetCurrentUserResponse> => {
+    const response = await usersService.getCurrentUserInfo(authToken);
     return response;
   },
 );

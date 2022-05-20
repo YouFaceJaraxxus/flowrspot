@@ -13,12 +13,19 @@ class UsersHttpService implements IUsersService {
     this.service = new HttpService(`${baseUrl || API_BASE_URL}${USERS_BASE_URL}`);
   }
   service: IAxiosService;
-  getCurrentUserInfo = (): Promise<IGetCurrentUserResponse> => this.service.get(CURRENT_USER_ENDPOINT).then((response) => response.data);
+  getCurrentUserInfo = (authToken: string): Promise<IGetCurrentUserResponse> =>
+    this.service.get(CURRENT_USER_ENDPOINT, {
+      axiosConfig: {
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      }
+    }).then((response) => response.data);
   login = (data: ILogin): Promise<ILoginResponse> =>
     this.service.post(LOGIN_ENDPOINT, data, {
       axiosConfig: {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         }
       }
     }).then((response) => response.data);

@@ -27,7 +27,7 @@ interface ISignupResponse{
 }
 
 export default interface IUsersService {
-  getCurrentUserInfo: () => Promise<IGetCurrentUserResponse>;
+  getCurrentUserInfo: (authToken: string) => Promise<IGetCurrentUserResponse>;
   login:(data: ILogin) => Promise<ILoginResponse>;
   signup:(data: ISignup) => Promise<ISignupResponse>;
 };

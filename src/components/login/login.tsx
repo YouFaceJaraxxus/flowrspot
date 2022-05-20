@@ -10,8 +10,8 @@ import { closeLoginModal, openProfileModal } from '../../redux/slices/commonSlic
 import CustomInputField from '../common/customInputField/customInputField';
 import { useState } from 'react';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
-import { ILogin } from '../../service/interfaces/usersService';
-import { loginAsync } from '../../redux/slices/usersSlice';
+import { ILogin, ILoginResponse } from '../../service/interfaces/usersService';
+import { getCurrentUserAsync, loginAsync } from '../../redux/slices/usersSlice';
 import { Error } from '../common/customForm/customFormStyle';
 
 const Login = () => {
@@ -47,9 +47,12 @@ const Login = () => {
     const data = getValues() as ILogin;
     dispatch(loginAsync(data)).then((response) => {
       if (response.payload) {
-        dispatch(setIsLogged(true));
-        localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
-        setConfirmationModalOpen(true);
+        dispatch(getCurrentUserAsync((response.payload as ILoginResponse).auth_token))
+          .then((result) => {
+            dispatch(setIsLogged(true));
+            localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
+            setConfirmationModalOpen(true);
+          })
       }
       else {
         setLoginError('Invalid credentials.');

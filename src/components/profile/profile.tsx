@@ -7,18 +7,11 @@ import { Avatar } from '@mui/material';
 import { SubmitButton } from '../common/customForm/customFormStyle';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
-import { useEffect } from 'react';
-import { getCurrentUserAsync } from '../../redux/slices/usersSlice';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const { profileModalOpen } = useAppSelector(selectCommon);
   const { currentUser } = useAppSelector(selectUsers);
-
-  useEffect(() => {
-    //blocked as I can't pass the auth_token I get when logging in (CORS)
-    //dispatch(getCurrentUserAsync());
-  }, [])
 
   const handleCloseProfileModal = () => {
     dispatch(closeProfileModal());
@@ -43,7 +36,7 @@ const Profile = () => {
           }} />
           <ProfileNameSightings>
             <ProfileName>
-              Milos Lukic
+              {currentUser ? `${currentUser.first_name} ${currentUser.last_name}` : 'Michael Berry'}
             </ProfileName>
             <ProfileSightings>
               76 sightings
@@ -56,7 +49,7 @@ const Profile = () => {
             First Name
           </ProfileDetailKey>
           <ProfileDetailValue>
-            Michael
+            {currentUser?.first_name ?? 'Michael'}
           </ProfileDetailValue>
         </ProfileDetailPair>
 
@@ -65,7 +58,7 @@ const Profile = () => {
             Last Name
           </ProfileDetailKey>
           <ProfileDetailValue>
-            Berry
+            {currentUser?.last_name ?? 'Berry'}
           </ProfileDetailValue>
         </ProfileDetailPair>
 
