@@ -30,7 +30,7 @@ const Profile = () => {
           &#10006;
         </ProfileCloseButton>
         <ProfileAvatarWrapper>
-          <Avatar src='./logo192.png' sx={{
+          <Avatar src='./images/profile_avatar.png' sx={{
             width: '80px',
             height: '80px',
           }} />

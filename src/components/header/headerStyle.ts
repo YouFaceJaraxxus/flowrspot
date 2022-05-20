@@ -68,7 +68,7 @@ export const NavbarMenuItemPrimary = styled(MenuItem)(({ theme }) => ({
   }
 }));
 
-export const NavbarNewAccountButton = styled('button')(({ theme }) => ({
+export const NavbarMenuButton = styled('button')(({ theme }) => ({
   fontSize: '1em',
   fontFamily: theme.typography.body2.fontFamily,
   display: 'flex',

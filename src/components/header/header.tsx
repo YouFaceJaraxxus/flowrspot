@@ -10,7 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { setIsLogged } from '../../redux/slices/userSlice';
-import { IHeaderItem } from './headerConfig.model';
+import { IHeaderItem } from './headerItem.model';
 import { selectCommon, selectUser } from '../../redux/store/store';
 import {
   AppBarCloseIcon,
@@ -22,7 +22,7 @@ import {
   NavbarDrawerList,
   NavbarMenuItem,
   NavbarMenuItemPrimary,
-  NavbarNewAccountButton
+  NavbarMenuButton
 } from './headerStyle';
 import { openLoginModal, openProfileModal, openSignupModal, toggleDrawer } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
@@ -54,9 +54,11 @@ const Header = () => {
 
 
 
-  const handleHeaderItemClick = (headerItem: IHeaderItem) => {
-    headerItem.action();
-    closeDropdownAndDrawer();
+  const handleHeaderItemClick = (action: Function) => {
+    return () => {
+      action();
+      closeDropdownAndDrawer();
+    }
   }
 
   const closeDropdownAndDrawer = () => {
@@ -94,13 +96,13 @@ const Header = () => {
       id: 1,
       protected: false,
       action: () => { navigateToPage(HOME_PATH) },
-      title: 'Flowers'
+      title: 'Flowers',
     },
     {
       id: 2,
       protected: true,
       action: () => { navigateToPage(HOME_PATH) },
-      title: 'Favorites'
+      title: 'Favorites',
     }
   ] as IHeaderItem[];
 
@@ -109,13 +111,13 @@ const Header = () => {
       id: 1,
       title: 'Profile',
       protected: true,
-      action: handleProfileClick
+      action: handleProfileClick,
     },
     {
       id: 2,
       action: handleLogout,
       protected: true,
-      title: 'Logout'
+      title: 'Logout',
     }] as IHeaderItem[];
 
   return (
@@ -157,27 +159,36 @@ const Header = () => {
 
 
             <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (!page.protected || isLogged) && (
-                <NavbarMenuItem key={page.id} onClick={() => handleHeaderItemClick(page)}>
-                  <Typography textAlign="center">{page.title}</Typography>
-                </NavbarMenuItem>
-              ))}
               {
-                !isLogged && (
-                  <NavbarMenuItemPrimary onClick={handleLoginClick}>
-                    <Typography textAlign="center">Login</Typography>
-                  </NavbarMenuItemPrimary>
-                )
-              }
+                !drawerOpen ?
+                  <>
+                    {pages.map((page) => (!page.protected || isLogged) && (
+                      <NavbarMenuItem key={page.id} onClick={handleHeaderItemClick(page.action)}>
+                        <Typography textAlign="center">{page.title}</Typography>
+                      </NavbarMenuItem>
+                    ))}
+                    {
+                      !isLogged && (
+                        <NavbarMenuItemPrimary onClick={handleHeaderItemClick(handleLoginClick)}>
+                          <Typography textAlign="center">Login</Typography>
+                        </NavbarMenuItemPrimary>
+                      )
+                    }
 
-              {
-                !isLogged && (
-                  <NavbarNewAccountButton onClick={handleSignupClick} sx={{
-                    margin: 'auto 0 auto 10px',
-                  }}>
-                    New account
-                  </NavbarNewAccountButton>
-                )
+                    {
+                      !isLogged && (
+                        <NavbarMenuButton onClick={handleHeaderItemClick(handleSignupClick)} sx={{
+                          margin: 'auto 0 auto 10px',
+                        }}>
+                          New account
+                        </NavbarMenuButton>
+                      )
+                    }
+                  </>
+
+                  :
+
+                  <AppBarCloseIcon onClick={handleToggleDrawer} />
               }
 
             </NavbarBox>
@@ -206,7 +217,7 @@ const Header = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <NavbarMenuItem key={setting.id} onClick={() => handleHeaderItemClick(setting)}>
+                  <NavbarMenuItem key={setting.id} onClick={handleHeaderItemClick(setting.action)}>
                     <Typography textAlign="center">{setting.title}</Typography>
                   </NavbarMenuItem>
                 ))}
@@ -219,35 +230,33 @@ const Header = () => {
       <CustomDrawer>
         <NavbarDrawerList>
           {pages.map((page) => (!page.protected || isLogged) && (
-            <NavbarMenuItem key={page.id} onClick={() => handleHeaderItemClick(page)}>
+            <NavbarMenuItem key={page.id} onClick={handleHeaderItemClick(page.action)} sx={{ margin: '10px auto 10px 0' }}>
               <Typography textAlign="center">{page.title}</Typography>
             </NavbarMenuItem>
           ))}
           {
             !isLogged && (
-              <NavbarMenuItemPrimary onClick={handleLoginClick}>
+              <NavbarMenuItemPrimary onClick={handleHeaderItemClick(handleLoginClick)} sx={{ margin: '10px auto 10px 0' }}>
                 <Typography textAlign="center">Login</Typography>
               </NavbarMenuItemPrimary>
             )
           }
 
           {settings.map((setting) => (!setting.protected || isLogged) && (
-            <NavbarMenuItem key={setting.id} onClick={() => handleHeaderItemClick(setting)}>
+            <NavbarMenuItem key={setting.id} onClick={handleHeaderItemClick(setting.action)} sx={{ margin: '10px auto 10px 0' }}>
               <Typography textAlign="center">{setting.title}</Typography>
             </NavbarMenuItem>
           ))}
 
           {
             !isLogged && (
-              <NavbarNewAccountButton onClick={handleSignupClick} sx={{
-                margin: 'auto 0 auto 10px',
+              <NavbarMenuButton onClick={handleHeaderItemClick(handleSignupClick)} sx={{
+                margin: '10px auto 10px 10px',
               }}>
                 New account
-              </NavbarNewAccountButton>
+              </NavbarMenuButton>
             )
           }
-
-
         </NavbarDrawerList>
       </CustomDrawer>
     </Box>
