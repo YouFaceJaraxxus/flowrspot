@@ -14,7 +14,7 @@ import { setIsLogged } from '../../redux/slices/userSlice';
 import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoText, AppBarLogoWrapper, AppBarMenuIcon, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
-import { openLoginModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
+import { openLoginModal, openProfileModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
@@ -92,6 +92,12 @@ const Header = () => {
     setAnchorElUser(null);
   }
 
+  const handleProfileClick = () => {
+    dispatch(openProfileModal());
+    setAnchorElUser(null);
+    setAnchorElNav(null);
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -158,12 +164,20 @@ const Header = () => {
                   </NavbarNewAccountButton>
                 )
               }
-              <MenuItem>
-                <Typography textAlign="center" onClick={() => { toggleTheme('light') }}>Light theme</Typography>
+              <MenuItem onClick={() => { toggleTheme('light') }}>
+                <Typography textAlign="center">Light theme</Typography>
               </MenuItem>
-              <MenuItem>
-                <Typography textAlign="center" onClick={() => { toggleTheme('dark'); }}>Dark theme</Typography>
+              <MenuItem onClick={() => { toggleTheme('dark'); }}>
+                <Typography textAlign="center">Dark theme</Typography>
               </MenuItem>
+              {
+                isLogged && (
+                  <MenuItem onClick={handleProfileClick}>
+                    <Typography textAlign="center" >Profile</Typography>
+                  </MenuItem>
+                )
+              }
+
               {settings.map((setting) => (
                 <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting.title}</Typography>
@@ -222,12 +236,19 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem>
-                <Typography textAlign="center" onClick={() => { toggleTheme('light') }}>Light theme</Typography>
+              <MenuItem onClick={() => { toggleTheme('light') }}>
+                <Typography textAlign="center">Light theme</Typography>
               </MenuItem>
-              <MenuItem>
-                <Typography textAlign="center" onClick={() => { toggleTheme('dark'); }}>Dark theme</Typography>
+              <MenuItem onClick={() => { toggleTheme('dark'); }}>
+                <Typography textAlign="center">Dark theme</Typography>
               </MenuItem>
+              {
+                isLogged && (
+                  <MenuItem onClick={handleProfileClick}>
+                    <Typography textAlign="center">Profile</Typography>
+                  </MenuItem>
+                )
+              }
               {settings.map((setting) => (
                 <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting.title}</Typography>
@@ -237,7 +258,7 @@ const Header = () => {
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBar >
   );
 };
 export default Header;
