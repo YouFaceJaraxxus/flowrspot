@@ -1,11 +1,15 @@
+import MenuIcon from '@mui/icons-material/Menu';
 import { MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const AppBarLogoWrapper = styled('div')(() => ({
+export const AppBarLogoWrapper = styled('div')(({theme}) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
+  [theme.breakpoints.down('xs')]:{
+    justifyContent: 'flex-start',
+  }
 }));
 
 export const AppBarLogo = styled('img')(() => ({
@@ -13,6 +17,20 @@ export const AppBarLogo = styled('img')(() => ({
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
   height: '30px',
+}));
+
+export const AppBarLogoText = styled('div')(({theme}) => ({
+  color: theme.palette.primary.dark,
+  fontWeight: 'bolder',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+  marginLeft: '10px',
+}));
+
+export const AppBarMenuIcon = styled(MenuIcon)(({theme}) => ({
+  color: theme.palette.primary.dark,
 }));
 
 export const NavbarBox = styled('div')(() => ({

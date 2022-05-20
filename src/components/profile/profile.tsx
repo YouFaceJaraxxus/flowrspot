@@ -27,6 +27,7 @@ const Profile = () => {
   const handleLogoutClicked = () => {
     dispatch(setIsLogged(false));
     localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
+    dispatch(closeProfileModal());
   }
 
   return (

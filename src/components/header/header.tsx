@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,10 +13,11 @@ import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
-import { AppBarLogo, AppBarLogoWrapper, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
+import { AppBarLogo, AppBarLogoText, AppBarLogoWrapper, AppBarMenuIcon, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
 import { openLoginModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
+import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 
 const pages = [
   {
@@ -37,20 +37,21 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
 
-  const logout = () => {
+  const handleLogout = () => {
     dispatch(setIsLogged(false));
+    localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
   }
 
   const settings = [{
     id: 1,
-    action: logout,
+    action: handleLogout,
     protected: true,
     title: 'Logout'
   }] as IHeaderSetting[]
 
   const handleNavClick = (route: string, logout = false) => {
     history.push(route);
-    if (logout) dispatch(setIsLogged(false));
+    if (logout) handleLogout();
   }
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -96,9 +97,11 @@ const Header = () => {
             }}
           >
             <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
-            FlowrSpot
+            <AppBarLogoText>
+              FlowrSpot
+            </AppBarLogoText>
           </AppBarLogoWrapper>
-          <NavbarBox sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <NavbarBox sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -107,7 +110,7 @@ const Header = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <AppBarMenuIcon />
             </IconButton>
             <Menu
 
@@ -135,14 +138,16 @@ const Header = () => {
               ))}
               {
                 !isLogged && (
-                  <>
-                    <NavbarMenuItemPrimary>
-                      <Typography textAlign="center" onClick={handleLoginClick}>Login</Typography>
-                    </NavbarMenuItemPrimary>
-                    <NavbarMenuItemPrimary onClick={handleSignupClick}>
-                      <Typography textAlign="center">New account</Typography>
-                    </NavbarMenuItemPrimary>
-                  </>
+                  <NavbarMenuItemPrimary>
+                    <Typography textAlign="center" onClick={handleLoginClick}>Login</Typography>
+                  </NavbarMenuItemPrimary>
+                )
+              }
+              {
+                !isLogged && (
+                  <NavbarMenuItemPrimary onClick={handleSignupClick}>
+                    <Typography textAlign="center">New account</Typography>
+                  </NavbarMenuItemPrimary>
                 )
               }
             </Menu>
@@ -159,6 +164,9 @@ const Header = () => {
             }}
           >
             <AppBarLogo src='/favicon.ico' alt="FlowrSpot" />
+            <AppBarLogoText>
+              FlowrSpot
+            </AppBarLogoText>
           </AppBarLogoWrapper>
           <NavbarBox sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (!page.protected || isLogged) && (
@@ -168,14 +176,17 @@ const Header = () => {
             ))}
             {
               !isLogged && (
-                <>
-                  <NavbarMenuItemPrimary onClick={handleLoginClick}>
-                    <Typography textAlign="center">Login</Typography>
-                  </NavbarMenuItemPrimary>
-                  <NavbarNewAccountButton onClick={handleSignupClick}>
-                    New account
-                  </NavbarNewAccountButton>
-                </>
+                <NavbarMenuItemPrimary onClick={handleLoginClick}>
+                  <Typography textAlign="center">Login</Typography>
+                </NavbarMenuItemPrimary>
+              )
+            }
+
+            {
+              !isLogged && (
+                <NavbarNewAccountButton onClick={handleSignupClick}>
+                  New account
+                </NavbarNewAccountButton>
               )
             }
 
