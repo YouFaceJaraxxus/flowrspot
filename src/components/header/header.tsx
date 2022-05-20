@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +15,7 @@ import { setIsLogged } from '../../redux/slices/userSlice';
 import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper, NavbarBox, NavbarMenuItem, NavbarMenuItemPrimary, NavbarNewAccountButton } from './headerStyle';
-import { setTheme } from '../../redux/slices/commonSlice';
+import { openLoginModal, openSignupModal, setTheme } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
 
@@ -38,7 +37,16 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
 
-  const settings = [] as IHeaderSetting[]
+  const logout = () => {
+    dispatch(setIsLogged(false));
+  }
+
+  const settings = [{
+    id: 1,
+    action: logout,
+    protected: true,
+    title: 'Logout'
+  }] as IHeaderSetting[]
 
   const handleNavClick = (route: string, logout = false) => {
     history.push(route);
@@ -61,6 +69,14 @@ const Header = () => {
     setAnchorElUser(null);
     if (setting.action) setting.action();
   };
+
+  const handleLoginClick = () => {
+    dispatch(openLoginModal());
+  }
+
+  const handleSignupClick = () => {
+    dispatch(openSignupModal());
+  }
 
   const toggleTheme = (theme: 'light' | 'dark') => {
     dispatch(setTheme(theme));
@@ -117,12 +133,18 @@ const Header = () => {
                   <Typography textAlign="center">{page.title}</Typography>
                 </NavbarMenuItem>
               ))}
-              <NavbarMenuItemPrimary>
-                <Typography textAlign="center">Login</Typography>
-              </NavbarMenuItemPrimary>
-              <NavbarMenuItemPrimary>
-                <Typography textAlign="center">New account</Typography>
-              </NavbarMenuItemPrimary>
+              {
+                !isLogged && (
+                  <>
+                    <NavbarMenuItemPrimary>
+                      <Typography textAlign="center" onClick={handleLoginClick}>Login</Typography>
+                    </NavbarMenuItemPrimary>
+                    <NavbarMenuItemPrimary onClick={handleSignupClick}>
+                      <Typography textAlign="center">New account</Typography>
+                    </NavbarMenuItemPrimary>
+                  </>
+                )
+              }
             </Menu>
           </NavbarBox>
 
@@ -144,12 +166,19 @@ const Header = () => {
                 <Typography textAlign="center">{page.title}</Typography>
               </NavbarMenuItem>
             ))}
-            <NavbarMenuItemPrimary>
-              <Typography textAlign="center">Login</Typography>
-            </NavbarMenuItemPrimary>
-            <NavbarNewAccountButton>
-              New account
-            </NavbarNewAccountButton>
+            {
+              !isLogged && (
+                <>
+                  <NavbarMenuItemPrimary onClick={handleLoginClick}>
+                    <Typography textAlign="center">Login</Typography>
+                  </NavbarMenuItemPrimary>
+                  <NavbarNewAccountButton onClick={handleSignupClick}>
+                    New account
+                  </NavbarNewAccountButton>
+                </>
+              )
+            }
+
           </NavbarBox>
 
           <Box sx={{ flexGrow: 0 }}>
