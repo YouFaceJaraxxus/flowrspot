@@ -5,20 +5,20 @@ import { EMAIL_REGEX } from '../../util/constants';
 import ILoginForm from './loginForm';
 import { CustomForm, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
 import CustomModal from '../common/modal/customModal';
-import { selectCommon } from '../../redux/store/store';
+import { selectCommon, selectUsers } from '../../redux/store/store';
 import { closeLoginModal, openProfileModal } from '../../redux/slices/commonSlice';
 import CustomInputField from '../common/customInputField/customInputField';
 import { useState } from 'react';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import { ILogin, ILoginResponse } from '../../service/interfaces/usersService';
-import { getCurrentUserAsync, loginAsync } from '../../redux/slices/usersSlice';
+import { getCurrentUserAsync, loginAsync, resetLoginError } from '../../redux/slices/usersSlice';
 import { Error } from '../common/customForm/customFormStyle';
 import { CustomButton } from '../common/customButton/customButtonStyle';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const { loginModalOpen } = useAppSelector(selectCommon);
-  const [loginError, setLoginError] = useState(undefined as string);
+  const { loginError } = useAppSelector(selectUsers);
 
   const { getValues, handleSubmit, control, reset, clearErrors } = useForm<ILoginForm>();
 
@@ -44,25 +44,22 @@ const Login = () => {
   }
 
   const onSubmit = () => {
-    setLoginError(null);
+    dispatch(resetLoginError());
     const data = getValues() as ILogin;
     dispatch(loginAsync(data)).then((response) => {
       if (response.payload) {
         dispatch(getCurrentUserAsync((response.payload as ILoginResponse).auth_token))
-          .then((result) => {
+          .then(() => {
             dispatch(setIsLogged(true));
             setConfirmationModalOpen(true);
           })
-      }
-      else {
-        setLoginError('Invalid credentials.');
       }
     })
 
   }
 
   const handleCloseLoginModal = () => {
-    setLoginError(null);
+    dispatch(resetLoginError());
     dispatch(closeLoginModal());
     clearErrors();
   }

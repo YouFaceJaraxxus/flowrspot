@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IUser from '../../models/user/user';
-import { IGetCurrentUserResponse, ILogin, ILoginResponse, ISignup, ISignupResponse, SignupError } from '../../service/interfaces/usersService';
+import { IGetCurrentUserResponse, ILogin, ILoginResponse, ISignup, ISignupResponse } from '../../service/interfaces/usersService';
 import { usersHttpService as usersService } from '../../service/usersService/usersHttpService';
 
 interface UsersState {
@@ -8,6 +8,7 @@ interface UsersState {
   fetchingCurrentUser: boolean;
   loggingIn: boolean;
   signingUp: boolean;
+  loginError: string;
   signupError: string;
   auth_token: string;
 }
@@ -17,6 +18,7 @@ const initialState: UsersState = {
   fetchingCurrentUser: false,
   loggingIn: false,
   signingUp: false,
+  loginError: null,
   signupError: null,
   auth_token: '',
 };
@@ -56,6 +58,12 @@ const usersSlice = createSlice({
     resetSignupError: (state) => {
       state.signupError = null;
     },
+    setLoginError: (state, action: PayloadAction<string>) => {
+      state.loginError = action.payload;
+    },
+    resetLoginError: (state) => {
+      state.loginError = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -88,15 +96,19 @@ const usersSlice = createSlice({
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.auth_token = action.payload.auth_token;
+        state.loginError = null;
         state.signingUp = false;
       })
-      .addCase(loginAsync.rejected, (state) => {
+      .addCase(loginAsync.rejected, (state, action) => {
         state.signingUp = false;
+        state.loginError = action.error.message;
       })
   },
 });
 
 export const {
+  setLoginError,
+  resetLoginError,
   setSignupError,
   resetSignupError,
 } = usersSlice.actions;
