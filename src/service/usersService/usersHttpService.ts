@@ -1,7 +1,8 @@
+import { AxiosError } from 'axios';
 import { API_BASE_URL } from '../../config/config';
 import HttpService from '../httpService';
 import { IAxiosService } from '../interfaces/service';
-import IUsersService, { IGetCurrentUserResponse, ILogin, ILoginResponse, ISignup, ISignupResponse } from '../interfaces/usersService';
+import IUsersService, { IGetCurrentUserResponse, ILogin, ILoginResponse, ISignup, ISignupResponse, SignupError } from '../interfaces/usersService';
 
 const USERS_BASE_URL = 'users';
 const CURRENT_USER_ENDPOINT = '/me';
@@ -36,7 +37,9 @@ class UsersHttpService implements IUsersService {
           'Content-Type': 'application/json'
         },
       }
-    }).then((response) => response.data);
+    }).then((response) => response.data).catch((error: AxiosError<any>) => {
+      throw new SignupError(error.response.data?.error);
+    });
 }
 
 const usersHttpService = new UsersHttpService();

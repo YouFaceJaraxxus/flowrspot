@@ -26,12 +26,32 @@ interface ISignupResponse{
   auth_token: string;
 }
 
+class LoginError extends Error{
+  constructor(message: string){
+    super();
+    this.message = message;
+  }
+  message: string;
+}
+
+class SignupError extends Error{
+  constructor(message: string){
+    super();
+    this.message = message;
+  }
+  message: string;
+}
+
 export default interface IUsersService {
   getCurrentUserInfo: (authToken: string) => Promise<IGetCurrentUserResponse>;
   login:(data: ILogin) => Promise<ILoginResponse>;
   signup:(data: ISignup) => Promise<ISignupResponse>;
 };
 
+export {
+  LoginError,
+  SignupError,
+}
 
 export type {
   IGetCurrentUserResponse,

@@ -4,7 +4,7 @@ import { EMAIL_REGEX } from '../../util/constants';
 import ISignupForm from './signupForm';
 import { CustomForm, FormTitle, FormWrapper, Error } from '../common/customForm/customFormStyle';
 import CustomModal from '../common/modal/customModal';
-import { selectCommon } from '../../redux/store/store';
+import { selectCommon, selectUsers } from '../../redux/store/store';
 import { closeSignupModal, openLoginModal } from '../../redux/slices/commonSlice';
 import CustomInputField from '../common/customInputField/customInputField';
 import { DoubleInputWrapper } from './signupStyle';
@@ -12,13 +12,13 @@ import moment from 'moment';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import { useEffect, useState } from 'react';
 import { ISignup } from '../../service/interfaces/usersService';
-import { signupAsync } from '../../redux/slices/usersSlice';
+import { resetSignupError, signupAsync } from '../../redux/slices/usersSlice';
 import { CustomButton } from '../common/customButton/customButtonStyle';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
   const { signupModalOpen } = useAppSelector(selectCommon);
-  const [signupError, setSignupError] = useState(undefined as string);
+  const { signupError } = useAppSelector(selectUsers);
 
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const closeConfirmationModal = () => {
@@ -44,7 +44,7 @@ const Signup = () => {
   }, [])
 
   const onSubmit = () => {
-    setSignupError(null);
+    dispatch(resetSignupError());
     const formData = getValues();
     const signupData = {
       email: formData.email,
@@ -57,9 +57,6 @@ const Signup = () => {
       if (response.payload) {
         setConfirmationModalOpen(true);
       }
-      else {
-        setSignupError('Registration error.')
-      }
     })
 
   }
@@ -67,7 +64,7 @@ const Signup = () => {
   const handleCloseSignupModal = () => {
     dispatch(closeSignupModal());
     clearErrors();
-    setSignupError(null);
+    dispatch(resetSignupError());
   }
 
   return (

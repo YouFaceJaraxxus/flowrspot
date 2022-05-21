@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IUser from '../../models/user/user';
-import { IGetCurrentUserResponse, ILogin, ILoginResponse, ISignup, ISignupResponse } from '../../service/interfaces/usersService';
+import { IGetCurrentUserResponse, ILogin, ILoginResponse, ISignup, ISignupResponse, SignupError } from '../../service/interfaces/usersService';
 import { usersHttpService as usersService } from '../../service/usersService/usersHttpService';
 
 interface UsersState {
@@ -8,6 +8,7 @@ interface UsersState {
   fetchingCurrentUser: boolean;
   loggingIn: boolean;
   signingUp: boolean;
+  signupError: string;
   auth_token: string;
 }
 
@@ -16,6 +17,7 @@ const initialState: UsersState = {
   fetchingCurrentUser: false,
   loggingIn: false,
   signingUp: false,
+  signupError: null,
   auth_token: '',
 };
 
@@ -47,7 +49,14 @@ export const signupAsync = createAsyncThunk(
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    setSignupError: (state, action: PayloadAction<string>) => {
+      state.signupError = action.payload;
+    },
+    resetSignupError: (state) => {
+      state.signupError = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCurrentUserAsync.pending, (state) => {
@@ -66,10 +75,12 @@ const usersSlice = createSlice({
       })
       .addCase(signupAsync.fulfilled, (state, action) => {
         state.auth_token = action.payload.auth_token;
+        state.signupError = null;
         state.loggingIn = false;
       })
-      .addCase(signupAsync.rejected, (state) => {
+      .addCase(signupAsync.rejected, (state, action) => {
         state.loggingIn = false;
+        state.signupError = action.error.message;
       })
 
       .addCase(loginAsync.pending, (state) => {
@@ -84,5 +95,10 @@ const usersSlice = createSlice({
       })
   },
 });
+
+export const {
+  setSignupError,
+  resetSignupError,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;
