@@ -1,5 +1,5 @@
 import Modal from '@mui/material/Modal';
-import { ModalBox } from './customModalStyle';
+import { ModalBox, ModalBoxContent, ModalCloseButton } from './customModalStyle';
 import ICustomModalProps from './customModalProps';
 
 const CustomModal = ({
@@ -7,7 +7,8 @@ const CustomModal = ({
   isOpen,
   handleClose,
   backgroundColor,
-  showOnTop
+  showOnTop,
+  hasCloseButton,
 }: ICustomModalProps) => {
   return (
     <Modal
@@ -18,9 +19,14 @@ const CustomModal = ({
     >
       <ModalBox sx={{
         backgroundColor: backgroundColor,
-        ...(showOnTop && {zIndex: 1000})
+        ...(showOnTop && { zIndex: 1000 })
       }}>
-        {children}
+        <ModalBoxContent>
+          {hasCloseButton && (
+            <ModalCloseButton onClick={handleClose}>&#10006;</ModalCloseButton>
+          )}
+          {children}
+        </ModalBoxContent>
       </ModalBox>
     </Modal>
   );

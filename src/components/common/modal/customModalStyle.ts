@@ -15,6 +15,24 @@ export const ModalBox = styled(Box)(({ theme }) => ({
     width: '80%',
   },
   borderRadius: '3px',
-  padding: '20px',
+  padding: '25px 20px',
   boxShadow: `2px 2px ${theme.palette.grey['100']}`,
+}));
+
+export const ModalBoxContent = styled(Box)(({ theme }) => ({
+  position: 'relative',
+}));
+
+export const ModalCloseButton = styled('div')(({theme}) => ({
+  position: 'absolute',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  top: '-20px',
+  right: '-10px',
+  '&:hover':{
+    opacity: '0.8',
+    cursor: 'pointer',
+  },
+  color: theme.palette.grey["300"],
 }));

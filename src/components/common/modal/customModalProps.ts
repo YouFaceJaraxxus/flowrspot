@@ -4,4 +4,5 @@ export default interface ICustomModalProps{
   backgroundColor?: string;
   isOpen: boolean;
   handleClose: () => void;
+  hasCloseButton?: boolean;
 }

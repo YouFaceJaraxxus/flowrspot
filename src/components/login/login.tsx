@@ -68,7 +68,11 @@ const Login = () => {
   }
 
   return (
-    <CustomModal isOpen={loginModalOpen} handleClose={handleCloseLoginModal}>
+    <CustomModal 
+      isOpen={loginModalOpen} 
+      handleClose={handleCloseLoginModal}
+      hasCloseButton
+    >
       <>
         <FormWrapper>
           <FormTitle>

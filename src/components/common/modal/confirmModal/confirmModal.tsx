@@ -15,6 +15,7 @@ const ConfirmModal = ({
     <CustomModal
       isOpen={isOpen}
       handleClose={handleClose}
+      hasCloseButton
     >
       <ConfirmModalWrapper>
         <ConfirmModalTitle>

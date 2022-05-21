@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon, selectUsers } from '../../redux/store/store';
 import { closeProfileModal } from '../../redux/slices/commonSlice';
-import { ProfileAvatarWrapper, ProfileCloseButton, ProfileDetailKey, ProfileDetailPair, ProfileDetailValue, ProfileName, ProfileNameSightings, ProfileSightings, ProfileWrapper } from './profileStyle';
+import { ProfileAvatarWrapper, ProfileDetailKey, ProfileDetailPair, ProfileDetailValue, ProfileName, ProfileNameSightings, ProfileSightings, ProfileWrapper } from './profileStyle';
 import { Avatar } from '@mui/material';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { CustomButton } from '../common/customButton/customButtonStyle';
@@ -22,11 +22,12 @@ const Profile = () => {
   }
 
   return (
-    <CustomModal isOpen={profileModalOpen} handleClose={handleCloseProfileModal}>
+    <CustomModal 
+      isOpen={profileModalOpen} 
+      handleClose={handleCloseProfileModal}
+      hasCloseButton
+    >
       <ProfileWrapper>
-        <ProfileCloseButton onClick={handleCloseProfileModal}>
-          &#10006;
-        </ProfileCloseButton>
         <ProfileAvatarWrapper>
           <Avatar src='./images/profile_avatar.png' sx={{
             width: '80px',

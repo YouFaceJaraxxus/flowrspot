@@ -10,19 +10,6 @@ export const ProfileWrapper = styled('div')(() => ({
   margin: 'auto',
 }));
 
-export const ProfileCloseButton = styled('div')(() => ({
-  position: 'absolute',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  top: '-10px',
-  right: '-10px',
-  '&:hover':{
-    opacity: '0.8',
-    cursor: 'pointer',
-  }
-}));
-
 const ProfileRow = styled('div')(() => ({
   margin: '0 0 auto 0',
   width: '100%',
