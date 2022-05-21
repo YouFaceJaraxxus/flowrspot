@@ -47,7 +47,6 @@ const Header = () => {
 
 
   const navigateToPage = (route: string) => {
-    console.log('route', route);
     history.push(route);
   }
 
