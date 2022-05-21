@@ -3,7 +3,7 @@ import { setIsLogged } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { EMAIL_REGEX } from '../../util/constants';
 import ILoginForm from './loginForm';
-import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
+import { CustomForm, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
 import { closeLoginModal, openProfileModal } from '../../redux/slices/commonSlice';
@@ -13,6 +13,7 @@ import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import { ILogin, ILoginResponse } from '../../service/interfaces/usersService';
 import { getCurrentUserAsync, loginAsync } from '../../redux/slices/usersSlice';
 import { Error } from '../common/customForm/customFormStyle';
+import { CustomButton } from '../common/customButton/customButtonStyle';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -132,13 +133,13 @@ const Login = () => {
               }}
             />
 
-            <SubmitButton
+            <CustomButton
               type="submit"
               width='95%'
               margin='20px auto 10px auto'
             >
               Login to your account
-            </SubmitButton>
+            </CustomButton>
             {loginError && (
               <Error>
                 {loginError}

@@ -1,3 +1,4 @@
+import { CustomButton } from './../../customButton/customButtonStyle';
 import { styled } from '@mui/material/styles';
 
 
@@ -28,28 +29,7 @@ export const ButtonsWrapper = styled('div')(() => ({
   alignItems: 'center',
 }));
 
-export const ConfirmationModalButton = styled('div')(({theme}) => ({
-  fontSize: '1em',
-  fontFamily: theme.typography.body2.fontFamily,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '15px 10px',
-  borderRadius: '3px',
-  textAlign: 'center',
-  wordBreak: 'break-word',
-  '&:hover': {
-    opacity: 0.8,
-    cursor: 'pointer',
-  },
-  border: 'none',
-  outline: 'none',
-  '&:focus': {
-    outline: 'none',
-    border: 'none',
-  },
-  backgroundColor: theme.palette.primary.dark,
-  color: theme.palette.common.white,
+export const ConfirmationModalButton = styled(CustomButton)(({theme}) => ({
   minWidth: '100px',
   margin: '20px',
 }));

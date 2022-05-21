@@ -4,8 +4,8 @@ import { selectCommon, selectUsers } from '../../redux/store/store';
 import { closeProfileModal } from '../../redux/slices/commonSlice';
 import { ProfileAvatarWrapper, ProfileCloseButton, ProfileDetailKey, ProfileDetailPair, ProfileDetailValue, ProfileName, ProfileNameSightings, ProfileSightings, ProfileWrapper } from './profileStyle';
 import { Avatar } from '@mui/material';
-import { SubmitButton } from '../common/customForm/customFormStyle';
 import { setIsLogged } from '../../redux/slices/userSlice';
+import { CustomButton } from '../common/customButton/customButtonStyle';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -78,13 +78,14 @@ const Profile = () => {
           </ProfileDetailValue>
         </ProfileDetailPair>
 
-        <SubmitButton
+        <CustomButton
           width="150px"
           sx={{
             marginTop: '20px'
           }}
           onClick={handleLogoutClicked}
-        >Logout</SubmitButton>
+        >Logout
+        </CustomButton>
       </ProfileWrapper>
     </CustomModal >
 

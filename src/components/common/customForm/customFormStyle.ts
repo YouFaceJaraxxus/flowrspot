@@ -1,11 +1,6 @@
 import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export interface ICustomButton{
-  width?: string;
-  margin?: string;
-}
-
 export const CustomForm = styled('form')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -32,32 +27,6 @@ export const FormTitle = styled('div')(({theme}) => ({
   fontSize: '1.2em',
   fontWeight: 'bolder',
   margin: '10px auto',
-}));
-
-export const SubmitButton = styled('button')<ICustomButton>(({ theme, width, margin }) => ({
-  width: width?? '100%',
-  fontSize: '1em',
-  fontFamily: theme.typography.body2.fontFamily,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '15px 10px',
-  borderRadius: '3px',
-  textAlign: 'center',
-  wordBreak: 'break-word',
-  '&:hover': {
-    opacity: 0.8,
-    cursor: 'pointer',
-  },
-  border: 'none',
-  outline: 'none',
-  '&:focus': {
-    outline: 'none',
-    border: 'none',
-  },
-  margin: margin?? 'auto',
-  backgroundColor: theme.palette.primary.dark,
-  color: theme.palette.common.white,
 }));
 
 export const FormTextField = styled(TextField)(() => ({

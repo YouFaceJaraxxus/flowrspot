@@ -1,3 +1,4 @@
+import { CustomButton } from './../common/customButton/customButtonStyle';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { MenuItem } from '@mui/material';
@@ -68,26 +69,12 @@ export const NavbarMenuItemPrimary = styled(MenuItem)(({ theme }) => ({
   }
 }));
 
-export const NavbarMenuButton = styled('button')(({ theme }) => ({
-  fontSize: '1em',
-  fontFamily: theme.typography.body2.fontFamily,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+export const NavbarMenuButton = styled(CustomButton)(({ theme }) => ({
+  width: 'auto',
+  margin: 'auto',
   padding: '10px 15px',
   borderRadius: '50px',
   minWidth: '150px',
-  textAlign: 'center',
-  '&:hover': {
-    opacity: 0.8,
-    cursor: 'pointer',
-  },
-  border: 'none',
-  outline: 'none',
-  '&:focus': {
-    outline: 'none',
-    border: 'none',
-  },
   backgroundColor: theme.palette.primary.dark,
   color: theme.palette.common.white,
 }));

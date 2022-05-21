@@ -2,7 +2,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { EMAIL_REGEX } from '../../util/constants';
 import ISignupForm from './signupForm';
-import { CustomForm, SubmitButton, FormTitle, FormWrapper, Error } from '../common/customForm/customFormStyle';
+import { CustomForm, FormTitle, FormWrapper, Error } from '../common/customForm/customFormStyle';
 import CustomModal from '../common/modal/customModal';
 import { selectCommon } from '../../redux/store/store';
 import { closeSignupModal, openLoginModal } from '../../redux/slices/commonSlice';
@@ -13,6 +13,7 @@ import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import { useEffect, useState } from 'react';
 import { ISignup } from '../../service/interfaces/usersService';
 import { signupAsync } from '../../redux/slices/usersSlice';
+import { CustomButton } from '../common/customButton/customButtonStyle';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -212,13 +213,13 @@ const Signup = () => {
               }}
             />
 
-            <SubmitButton
+            <CustomButton
               type="submit"
               width='95%'
               margin='20px auto 10px auto'
             >
               Create account
-            </SubmitButton>
+            </CustomButton>
 
             {
               signupError && (
