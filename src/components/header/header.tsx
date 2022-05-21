@@ -27,7 +27,6 @@ import {
 import { openLoginModal, openProfileModal, openSignupModal, toggleDrawer } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
 import { HOME_PATH } from '../../router/route/routeConfig';
-import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import CustomDrawer from '../common/customDrawer/customDrawer';
 
 
@@ -43,7 +42,6 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(setIsLogged(false));
-    localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
   }
 
 

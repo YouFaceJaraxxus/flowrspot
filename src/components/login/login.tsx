@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { setIsLogged } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
-import { EMAIL_REGEX, IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
+import { EMAIL_REGEX } from '../../util/constants';
 import ILoginForm from './loginForm';
 import { CustomForm, SubmitButton, FormTitle, FormWrapper } from '../common/customForm/customFormStyle';
 import CustomModal from '../common/modal/customModal';
@@ -50,7 +50,6 @@ const Login = () => {
         dispatch(getCurrentUserAsync((response.payload as ILoginResponse).auth_token))
           .then((result) => {
             dispatch(setIsLogged(true));
-            localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
             setConfirmationModalOpen(true);
           })
       }

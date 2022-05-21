@@ -6,7 +6,6 @@ import { ProfileAvatarWrapper, ProfileCloseButton, ProfileDetailKey, ProfileDeta
 import { Avatar } from '@mui/material';
 import { SubmitButton } from '../common/customForm/customFormStyle';
 import { setIsLogged } from '../../redux/slices/userSlice';
-import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +18,6 @@ const Profile = () => {
 
   const handleLogoutClicked = () => {
     dispatch(setIsLogged(false));
-    localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
     dispatch(closeProfileModal());
   }
 
