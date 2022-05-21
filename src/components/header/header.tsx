@@ -26,7 +26,7 @@ import {
 } from './headerStyle';
 import { openLoginModal, openProfileModal, openSignupModal, toggleDrawer } from '../../redux/slices/commonSlice';
 import { Avatar } from '@mui/material';
-import { HOME_PATH } from '../../router/route/routeConfig';
+import { HOME_PATH, FAVORITES_PATH } from '../../router/route/routeConfig';
 import CustomDrawer from '../common/customDrawer/customDrawer';
 
 
@@ -47,6 +47,7 @@ const Header = () => {
 
 
   const navigateToPage = (route: string) => {
+    console.log('route', route);
     history.push(route);
   }
 
@@ -99,7 +100,7 @@ const Header = () => {
     {
       id: 2,
       protected: true,
-      action: () => { navigateToPage(HOME_PATH) },
+      action: () => { navigateToPage(FAVORITES_PATH) },
       title: 'Favorites',
     }
   ] as IHeaderItem[];
