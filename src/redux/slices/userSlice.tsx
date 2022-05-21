@@ -15,9 +15,6 @@ const userSlice = createSlice({
     setIsLogged: (state, action: PayloadAction<boolean>) => {
       state.isLogged = action.payload;
     },
-    setCheckedIsLogged: (state, action: PayloadAction<boolean>) => {
-      state.isLogged = action.payload;
-    },
   },
 })
 
