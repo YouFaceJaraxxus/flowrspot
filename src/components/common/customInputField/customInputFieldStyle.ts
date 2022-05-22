@@ -27,6 +27,7 @@ export const InputPlaceholderWrapper = styled('div')<IInputPlaceholderWrapper>((
   backgroundColor: theme.palette.grey['400'],
   padding: '10px',
   borderRadius: '3px',
+  //even though we could simply pass a boolean (true/false), it causes a red warning "passed `true`/`false` for non-boolean value"
   border: haserror === 'true'? `1px solid ${theme.palette.error.main}` : 'none',
   width: width?? '100%',
 }));
