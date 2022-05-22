@@ -40,8 +40,10 @@ const Signup = () => {
   const { getValues, handleSubmit, control, reset, clearErrors, setValue } = useForm<ISignupForm>();
 
   useEffect(() => {
-    setValue("dateOfBirth", moment().format("MMM DD, YYYY"));
-  }, [])
+    if(signupModalOpen){
+      setValue("dateOfBirth", moment().format("MMM DD, YYYY"));
+    }
+  }, [signupModalOpen])
 
   const onSubmit = () => {
     dispatch(resetSignupError());
