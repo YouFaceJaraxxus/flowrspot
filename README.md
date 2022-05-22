@@ -16,14 +16,22 @@ Installation:
 
 `npm install`  
 
-To Run Test Suite:  
+To run test Suite:  
 
 `npm run test`  
 
-To Start Server:
+To start the server locally:
 
 `npm run start`  
 
-To Visit App:
+To view the app locally:
 
 `localhost:3000/`
+
+To get a production build:
+
+`npm run build`  
+
+To deploy a new production build to Firebase (you must be logged in to the Firebase console):
+
+`firebase deploy`  
