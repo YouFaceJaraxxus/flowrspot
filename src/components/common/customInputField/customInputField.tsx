@@ -18,7 +18,7 @@ const CustomInputField = ({
 
   return (
     <CustomInputFieldWrapper width={wrapperWidth}>
-      <InputPlaceholderWrapper error={error} width={width}>
+      <InputPlaceholderWrapper haserror={error? 'true' : 'false'} width={width}>
         <CustomInputFieldPlaceholder>{placeholderText}</CustomInputFieldPlaceholder>
         <CustomInputFieldInput type={type} value={value} onChange={handleValueChange} />
       </InputPlaceholderWrapper>

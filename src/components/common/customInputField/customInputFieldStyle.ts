@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 export interface IInputPlaceholderWrapper{
-  error: boolean;
+  haserror: boolean | string;
   width?: string;
 }
 
@@ -19,7 +19,7 @@ export const CustomInputFieldWrapper = styled('div')<ICustomInputFieldWrapper>((
 }));
 
 
-export const InputPlaceholderWrapper = styled('div')<IInputPlaceholderWrapper>(({theme, error, width}) => ({
+export const InputPlaceholderWrapper = styled('div')<IInputPlaceholderWrapper>(({theme, haserror, width}) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
@@ -27,7 +27,7 @@ export const InputPlaceholderWrapper = styled('div')<IInputPlaceholderWrapper>((
   backgroundColor: theme.palette.grey['400'],
   padding: '10px',
   borderRadius: '3px',
-  border: error? `1px solid ${theme.palette.error.main}` : 'none',
+  border: haserror === 'true'? `1px solid ${theme.palette.error.main}` : 'none',
   width: width?? '100%',
 }));
 
